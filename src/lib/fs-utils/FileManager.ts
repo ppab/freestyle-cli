@@ -34,4 +34,8 @@ export class FileManager {
 
     }
 
+    createDir(filePath, recursive = true) {
+        this.createDirectory(filePath, recursive)
+    }
+
 }
