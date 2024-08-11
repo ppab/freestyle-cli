@@ -89,7 +89,7 @@ export const reactFrontendSchema: FrontEndSchema = {
             Catalog: 'Catalog',
             Config: 'Config',
         },
-        modules: []
+        modules: ["{{BACKEND_MODULES"]
     },
 
 }

@@ -6,6 +6,7 @@ type readFileArgs = {
 
 export function readFileSync(args: readFileArgs) {
     const {filePath, options} = args
+    console.log("filePathArgs->", args)
     const fileManager = FileManager.sync()
     return fileManager.read(filePath, options)
 }

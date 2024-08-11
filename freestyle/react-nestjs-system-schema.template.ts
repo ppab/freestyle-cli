@@ -5,5 +5,5 @@ export const systemSchema: SystemSchema = {
     name: 'SystemName',
     frontEnd: reactFrontendSchema,
     backend: nestjsBackendSchema,
-    entities: {},
+    entities: ,
 }

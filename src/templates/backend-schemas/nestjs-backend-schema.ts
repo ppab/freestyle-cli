@@ -30,7 +30,7 @@ export const nestjsBackendSchema: BackendSchema =
                     }
                 ]
             },
-            modules: []
+            modules: ["{{FRONTEND_MODULES"]
         },
         templates: [
             {

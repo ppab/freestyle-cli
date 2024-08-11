@@ -1,3 +1,5 @@
+import {FileManager} from "./fs-utils/FileManager";
+
 type StrategyItems = {
     name: string;
     args: { [key: string]: any }; // more flexible args type
@@ -14,18 +16,17 @@ type KeyWithStrategyItems = {
 }
 
 type StrategyDispatcher = {
-    list: StrategyItems[];
+    action: StrategyItems;
 
     ctx?: { [key: string]: any }; // allow ctx to hold any type
 }
 
-export const dispatcher = (strategies: KeyWithFn) => ({list, ctx}: StrategyDispatcher) => {
-
-    for (let item of list) {
-        const fn = strategySelector(item.name, strategies);
-        const args = {...item.args, ...ctx,};
-        fn(args);
-    }
+export const dispatcher = (strategies: KeyWithFn) => ({action, ctx}: StrategyDispatcher) => {
+    console.log("action!->", action)
+    const fn = strategySelector(action.name, strategies);
+    const args = {...action.args, ctx,};
+    console.log("args->", args)
+    return (fn(args));
 }
 
 
@@ -49,17 +50,26 @@ const strategySelector = (strategyName: keyof KeyWithFn, strategies: KeyWithFn):
 export class ActionManager {
     private task: StrategyItems[]
 
-    constructor(private readonly tasks: KeyWithStrategyItems, private strategies: KeyWithFn) {
+    constructor(private tasks: KeyWithStrategyItems, private readonly strategies: KeyWithFn) {
         this.tasks = tasks
         this.strategies = strategies
     }
 
     setTask = (taskName: keyof KeyWithStrategyItems): void => {
+        console.log("settingTask->", taskName)
+        console.log("settingTask->", taskName)
         const selected = this.tasks[taskName];
         if (!selected) {
             throw new Error(`Task ${taskName} not supported, available tasks: ${Object.keys(this.tasks).join(', ')}`);
         }
         this.task = selected
+    }
+
+    setCustomTasks = (taskPath: string): void => {
+        const fileManager = FileManager.sync()
+        const tasks = JSON.parse(fileManager.read(taskPath))
+        console.log("customTasks", tasks)
+        this.tasks = tasks
     }
 
     strategySelector = (strategyName: keyof KeyWithFn, strategies: KeyWithFn): genericFn => {
@@ -71,6 +81,8 @@ export class ActionManager {
     }
 
     dispatch(task, ctx) {
+        console.log("dispatchin->", task, ctx)
+        console.log("task->", task,)
         this.setTask(task)
 
         if (!this.task) {

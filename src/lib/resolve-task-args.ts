@@ -9,12 +9,13 @@ const captureGroupsToObject = (str, regex): { [key: string]: string } | null => 
 
 }
 const parseSubcommand = (str) => {
-    const subcommandRE = new RegExp(/--(\w+)=([\w\d]+)/)
+    const subcommandRE = new RegExp(/--(\w+)=(.+)/)
     return captureGroupsToObject(str, subcommandRE)
 }
 
 const resolveSubcommands = (arr, fn) => {
     if (arr.length > 0) {
+        console.log("subCommands", arr)
         return arr.map(c => fn(c)).filter(Boolean).reduce((acc, cur) => Object.assign(acc, cur), {})
     }
     return {}

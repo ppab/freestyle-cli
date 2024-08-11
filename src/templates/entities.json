@@ -1,0 +1,51 @@
+{
+  "PEPE": {
+    "myname": "PEPE"
+  },
+  "entityName": "test",
+  "entityPlural": "test list",
+  "invoice note": {
+    "ORIGINAL_ENTITY": "invoice note",
+    "UPPER_SNAKE_CASE_ENTITY": "INVOICE_NOTE",
+    "LOWER_SNAKE_CASE_ENTITY": "invoice_note",
+    "KEBAB_CASE_ENTITY": "invoice-note",
+    "TITLE_CASE_ENTITY": "Invoice Note",
+    "CAPITALIZED_ENTITY": "INVOICE NOTE",
+    "LOWERCASE_ENTITY": "invoice note",
+    "PASCAL_CASE_ENTITY": "InvoiceNote",
+    "CAMEL_CASE_ENTITY": "invoiceNote",
+    "UPPERCASE_ENTITY": "INVOICE NOTE",
+    "ORIGINAL_ENTITY_PLURAL": "invoice notes",
+    "UPPER_SNAKE_CASE_ENTITY_PLURAL": "INVOICE_NOTES",
+    "LOWER_SNAKE_CASE_ENTITY_PLURAL": "invoice_notes",
+    "KEBAB_CASE_ENTITY_PLURAL": "invoice-notes",
+    "TITLE_CASE_ENTITY_PLURAL": "Invoice Notes",
+    "CAPITALIZED_ENTITY_PLURAL": "INVOICE NOTES",
+    "LOWERCASE_ENTITY_PLURAL": "invoice notes",
+    "PASCAL_CASE_ENTITY_PLURAL": "InvoiceNotes",
+    "CAMEL_CASE_ENTITY_PLURAL": "invoiceNotes",
+    "UPPERCASE_ENTITY_PLURAL": "INVOICE NOTES"
+  },
+  "address": {
+    "ORIGINAL_ENTITY": "address",
+    "UPPER_SNAKE_CASE_ENTITY": "ADDRESS",
+    "LOWER_SNAKE_CASE_ENTITY": "address",
+    "KEBAB_CASE_ENTITY": "address",
+    "TITLE_CASE_ENTITY": "Address",
+    "CAPITALIZED_ENTITY": "ADDRESS",
+    "LOWERCASE_ENTITY": "address",
+    "PASCAL_CASE_ENTITY": "Address",
+    "CAMEL_CASE_ENTITY": "address",
+    "UPPERCASE_ENTITY": "ADDRESS",
+    "ORIGINAL_ENTITY_PLURAL": "invoice adresses",
+    "UPPER_SNAKE_CASE_ENTITY_PLURAL": "INVOICE_ADRESSES",
+    "LOWER_SNAKE_CASE_ENTITY_PLURAL": "invoice_adresses",
+    "KEBAB_CASE_ENTITY_PLURAL": "invoice-adresses",
+    "TITLE_CASE_ENTITY_PLURAL": "Invoice Adresses",
+    "CAPITALIZED_ENTITY_PLURAL": "INVOICE ADRESSES",
+    "LOWERCASE_ENTITY_PLURAL": "invoice adresses",
+    "PASCAL_CASE_ENTITY_PLURAL": "InvoiceAdresses",
+    "CAMEL_CASE_ENTITY_PLURAL": "invoiceAdresses",
+    "UPPERCASE_ENTITY_PLURAL": "INVOICE ADRESSES"
+  }
+}
