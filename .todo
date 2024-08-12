@@ -1,0 +1,11 @@
+1. Create my own library that has CI/CD  that publishes to NPM
+- It must have specs for all fns
+- As a habit, when you want to create new work you setup your TS environment
+ and  do TDD and use the debugger also.
+ - create factories for function arguments, in this way we can controll the way fn or class arguments are created, it will speed our dev process.
+ - instead of debugging using console.log() you must learn how to use the debbugger and write a test straight away
+
+ ```bash
+ freestyle create --name='my-fn' --type='class|fn'
+ ## this wil create a file with its test file and its factory
+ ```
