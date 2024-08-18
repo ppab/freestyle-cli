@@ -1,0 +1,51 @@
+{
+  "entity": "user",
+  "entityPlural": "users",
+  "dto": {
+    "create": [
+      {
+        "key": "firstName",
+        "type": "string",
+        "decorators": [
+          "IsString"
+        ]
+      },
+      {
+        "key": "lastName",
+        "type": "string",
+        "decorators": [
+          "IsString"
+        ]
+      }
+    ]
+  },
+  "enums": [
+    {
+      "name": "AddressCategoryEnum",
+      "values": [
+        "Primary",
+        "Secondary"
+      ]
+    }
+  ],
+  "typeOrm": {
+    "entityClassDecorator": "Entity",
+    "sqlTable": "users",
+    "properties": [
+      {
+        "key": "firstName",
+        "type": "string",
+        "decorators": [
+          "Column"
+        ]
+      },
+      {
+        "key": "lastName",
+        "type": "string",
+        "decorators": [
+          "Column"
+        ]
+      }
+    ]
+  }
+}

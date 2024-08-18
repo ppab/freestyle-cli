@@ -1,18 +1,19 @@
 export {};
+export  type PathDefinitionType =
+    | {
+    path: string;
+    dir?: never;
+    fileName?: never;
+}
+    | {
+    dir: string[] | string;
+    fileName: string[] | string;
+    path?: never;
+};
+
+
 declare global {
     type RequireOnly<T, P extends keyof T> = Pick<T, P> & Partial<Omit<T, P>>;
-
-    type PathDefinitionType =
-        | {
-        path: string;
-        dir?: never;
-        fileName?: never;
-    }
-        | {
-        dir: string[] | string;
-        fileName: string[] | string;
-        path?: never;
-    };
 
     type TemplateConfig = {
         name: string;

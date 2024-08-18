@@ -30,7 +30,7 @@ export const nestjsBackendSchema: BackendSchema =
                     }
                 ]
             },
-            modules: []
+            modules: ["{{FRONTEND_MODULES"]
         },
         templates: [
             {
@@ -97,13 +97,13 @@ export const nestjsBackendSchema: BackendSchema =
                 name: 'nestjs/dtoWithGenerators',
                 dir: ['src', '{{KEBAB_CASE_ENTITY_PLURAL}}', 'dto'],
                 fileName: ['create-', '{{KEBAB_CASE_ENTITY}}', '.dto.ts'],
-                templateFileName: 'generic-dto-with-decorators.txt',
+                templateFileName: 'generic-dto-with-DtoDecorators.txt',
             },
             {
                 name: 'nestjs/dtoWithGenerators',
                 dir: ['src', '{{KEBAB_CASE_ENTITY_PLURAL}}', 'entities'],
                 fileName: ['{{KEBAB_CASE_ENTITY}}', '.entity.ts'],
-                templateFileName: 'generic-entity-with-decorators.txt',
+                templateFileName: 'generic-entity-with-DtoDecorators.txt',
             },
             {
                 name: 'nestjs/enums',

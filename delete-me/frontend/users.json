@@ -1,0 +1,121 @@
+{
+  "name": "Users",
+  "stateKey": "users",
+  "appNavigation": [
+    {
+      "role": "fullRole",
+      "parent": "AppNavigation",
+      "children": {
+        "icon": "CogIcon",
+        "name": "{{PASCAL_CASE_ENTITY_PLURAL}}",
+        "href": "routes.0.path",
+        "current": false
+      }
+    }
+  ],
+  "urlBuilder": {
+    "queryAll": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "users",
+        "/"
+      ],
+      "relations": [
+        "customer"
+      ]
+    },
+    "queryOne": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "users",
+        "/",
+        "params.id"
+      ],
+      "relations": [
+        "customer"
+      ]
+    },
+    "mutationOne": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "users",
+        "/"
+      ],
+      "relations": [
+        "customer"
+      ]
+    }
+  },
+  "routes": [
+    {
+      "role": [
+        "any"
+      ],
+      "path": "users",
+      "exact": true,
+      "page": {
+        "name": "Users"
+      }
+    },
+    {
+      "role": [
+        "any"
+      ],
+      "path": "users",
+      "exact": true,
+      "page": {
+        "name": "User"
+      }
+    },
+    {
+      "role": [
+        "any"
+      ],
+      "path": "users",
+      "exact": true,
+      "page": {
+        "name": "User"
+      }
+    }
+  ],
+  "colDef": {
+    "list": [
+      {
+        "field": "firstName",
+        "editable": false
+      },
+      {
+        "field": "lastName",
+        "editable": true
+      }
+    ],
+    "item": [
+      {
+        "field": "firstName",
+        "editable": false
+      },
+      {
+        "field": "lastName",
+        "editable": true
+      }
+    ]
+  },
+  "form": {
+    "create": [
+      {
+        "name": "firstName",
+        "type": "text"
+      },
+      {
+        "name": "lastName",
+        "type": "string"
+      }
+    ]
+  }
+}

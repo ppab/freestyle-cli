@@ -1,18 +1,21 @@
 export {};
+export  type PathDefinitionType =
+    | {
+    path: string;
+    dir?: never;
+    fileName?: never;
+}
+    | {
+    dir: string[] | string;
+    fileName: string[] | string;
+    path?: never;
+};
+
+
 declare global {
     type RequireOnly<T, P extends keyof T> = Pick<T, P> & Partial<Omit<T, P>>;
+    type CreatePropertyOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-    type PathDefinitionType =
-        | {
-        path: string;
-        dir?: never;
-        fileName?: never;
-    }
-        | {
-        dir: string[] | string;
-        fileName: string[] | string;
-        path?: never;
-    };
 
     type TemplateConfig = {
         name: string;
@@ -106,4 +109,80 @@ declare global {
         COL_DEF_LIST: string;
     };
 
+
+    ////////////////////
+    type ClassValidators =
+        | 'IsOptional'
+        | 'IsString'
+        | 'IsUUID'
+        | 'IsArray'
+        | 'ArrayNotEmpty'
+        | 'IsBoolean'
+        | 'IsDate'
+        | 'IsEnum'
+        | 'IsInt'
+        | 'IsNumber'
+        | 'IsObject'
+        | 'IsPositive'
+        | 'Max'
+        | 'Min'
+        | 'IsDateString'
+        | 'IsNotEmpty'
+        | 'ValidateNested'
+        ;
+
+    type ClassTransformers = 'Type';
+
+
+    type DtoDecoratorWithArgs = [
+            ClassValidators | ClassTransformers,
+        { args: any; path?: string },
+    ];
+    type DtoDecoratorType =
+        | ClassValidators
+        | ClassTransformers
+        | DtoDecoratorWithArgs;
+
+    export type DtoDecorators = DtoDecoratorType[];
+
+    type TypeOrmDecoratorNames =
+        'Column' | 'Entity' | 'JoinColumn' | 'ManyToOne' | 'OneToMany';
+
+    type TypeOrmDecoratorWithArgs = [
+        TypeOrmDecoratorNames,
+        { args: any; path?: string },
+    ];
+    type TypeOrmDecoratorType =
+        TypeOrmDecoratorNames | TypeOrmDecoratorWithArgs
+
+    export type TypeOrmDecorators = TypeOrmDecoratorType[];
+
+
+    export type SystemInput = {
+        entity: string;
+        entityPlural: string;
+        generateFiles?: [
+            'Module',
+            'Service',
+            'Controller',
+            'entity',
+            'EntityDto',
+            'CreateDto',
+            'UpdateDto',
+        ];
+        enums?: any[];
+        dto: { create: DTO_Config_Interface[] };
+        typeOrm?: any;
+    }
+
 }
+export type DTO_Config_Interface = {
+    key: string;
+    type: string;
+    decorators: DtoDecorators;
+};
+export type TypeOrmEntity_Config_Interface = {
+    key: string;
+    type: string;
+    decorators: TypeOrmDecorators
+};

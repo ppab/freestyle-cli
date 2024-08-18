@@ -72,6 +72,19 @@ export class UrlBuilderFactory extends Factory <UrlBuilder> {
                 urlBuilderUrlArgsFactory.mutationOne({relations}).build(),
         })
     }
+
+    generic({relations, KEBAB_CASE_ENTITY_PLURAL}: { relations?: string[], KEBAB_CASE_ENTITY_PLURAL: string }) {
+        const queryAlParts = [KEBAB_CASE_ENTITY_PLURAL, '/']
+        const queryOneParts = [KEBAB_CASE_ENTITY_PLURAL, '/', 'params.id']
+        const mutationOneParts = [KEBAB_CASE_ENTITY_PLURAL, '/']
+        return this.params({
+            queryAll: urlBuilderUrlArgsFactory.queryAll({relations, parts: queryAlParts}).build(),
+            queryOne:
+                urlBuilderUrlArgsFactory.queryOne({relations, parts: queryOneParts}).build(),
+            mutationOne:
+                urlBuilderUrlArgsFactory.mutationOne({relations, parts: mutationOneParts}).build(),
+        })
+    }
 }
 
 export const urlBuilderFactory = UrlBuilderFactory.define(() => ({

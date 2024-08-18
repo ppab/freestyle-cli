@@ -22,16 +22,14 @@ export function addEntity(args: readFileArgs) {
     const data = readJsonFile(args);
     const entityCtx = createEntityContext(ENTITY_NAME, ENTITY_NAME_PLURAL)
     console.log("entityCtx", entityCtx)
-    console.log("entityCtx", entityCtx)
-    console.log("entityCtx", entityCtx)
-    console.log("entityCtx", entityCtx)
-    const dataWithEntity = {...data, [ENTITY_NAME]: entityCtx};
+
+    const dataWithEntity = {...data, [entityCtx.KEBAB_CASE_ENTITY]: entityCtx};
 
 
-    const resolvedContentCtx = JSON.parse(strReplaceRegexMatchFromContext(JSON.stringify(content), args?.ctx))
-    createEntityContext(ENTITY_NAME, ENTITY_NAME_PLURAL)
-    console.log("resolvedContentCtx", resolvedContentCtx)
-    const mergedData = {...dataWithEntity, ...resolvedContentCtx}
+    // const resolvedContentCtx = JSON.parse(strReplaceRegexMatchFromContext(JSON.stringify(content), args?.ctx))
+    // createEntityContext(ENTITY_NAME, ENTITY_NAME_PLURAL)
+    // console.log("resolvedContentCtx", resolvedContentCtx)
+    const mergedData = {...dataWithEntity}
     writeFileSync({...args, content: mergedData})
 
     const fileManager = FileManager.sync()

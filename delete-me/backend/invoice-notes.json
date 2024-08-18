@@ -1,0 +1,51 @@
+{
+  "entity": "invoice note",
+  "entityPlural": "invoice notes",
+  "dto": {
+    "create": [
+      {
+        "key": "firstName",
+        "type": "string",
+        "decorators": [
+          "IsString"
+        ]
+      },
+      {
+        "key": "lastName",
+        "type": "string",
+        "decorators": [
+          "IsString"
+        ]
+      }
+    ]
+  },
+  "enums": [
+    {
+      "name": "AddressCategoryEnum",
+      "values": [
+        "Primary",
+        "Secondary"
+      ]
+    }
+  ],
+  "typeOrm": {
+    "entityClassDecorator": "Entity",
+    "sqlTable": "invoice_notes",
+    "properties": [
+      {
+        "key": "firstName",
+        "type": "string",
+        "decorators": [
+          "Column"
+        ]
+      },
+      {
+        "key": "lastName",
+        "type": "string",
+        "decorators": [
+          "Column"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "name": "InvoiceNotes",
+  "stateKey": "invoiceNotes",
+  "appNavigation": [
+    {
+      "role": "fullRole",
+      "parent": "AppNavigation",
+      "children": {
+        "icon": "CogIcon",
+        "name": "{{PASCAL_CASE_ENTITY_PLURAL}}",
+        "href": "routes.0.path",
+        "current": false
+      }
+    }
+  ],
+  "urlBuilder": {
+    "queryAll": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "invoice-notes",
+        "/"
+      ],
+      "relations": [
+        "customer"
+      ]
+    },
+    "queryOne": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "invoice-notes",
+        "/",
+        "params.id"
+      ],
+      "relations": [
+        "customer"
+      ]
+    },
+    "mutationOne": {
+      "context": [
+        "params"
+      ],
+      "parts": [
+        "invoice-notes",
+        "/"
+      ],
+      "relations": [
+        "customer"
+      ]
+    }
+  },
+  "routes": [
+    {
+      "role": [
+        "any"
+      ],
+      "path": "invoice-notes",
+      "exact": true,
+      "page": {
+        "name": "InvoiceNotes"
+      }
+    },
+    {
+      "role": [
+        "any"
+      ],
+      "path": "invoice-notes",
+      "exact": true,
+      "page": {
+        "name": "InvoiceNote"
+      }
+    },
+    {
+      "role": [
+        "any"
+      ],
+      "path": "invoice-notes",
+      "exact": true,
+      "page": {
+        "name": "InvoiceNote"
+      }
+    }
+  ],
+  "colDef": {
+    "list": [
+      {
+        "field": "firstName",
+        "editable": false
+      },
+      {
+        "field": "lastName",
+        "editable": true
+      }
+    ],
+    "item": [
+      {
+        "field": "firstName",
+        "editable": false
+      },
+      {
+        "field": "lastName",
+        "editable": true
+      }
+    ]
+  },
+  "form": {
+    "create": [
+      {
+        "name": "firstName",
+        "type": "text"
+      },
+      {
+        "name": "lastName",
+        "type": "string"
+      }
+    ]
+  }
+}

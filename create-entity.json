@@ -1,0 +1,17 @@
+{
+  "create_entity": [
+    {
+      "name": "pipe",
+      "args": {
+        "commands": [
+          {
+            "name": "addEntity",
+            "args": {
+              "filePath": "./freestyle/entities.json"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

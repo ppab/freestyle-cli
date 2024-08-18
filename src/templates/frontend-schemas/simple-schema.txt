@@ -1,0 +1,10 @@
+import { SystemInput } from '../../bin/react-crud-redux/types';
+import frontEnd from './frontEnd';
+import * as entities from '../entities.json';
+
+export const {{PASCAL_CASE_ENTITY_PLURAL}}Module: SystemInput = {
+  entity: entities.{{CAMEL_CASE_ENTITY}}.KEBAB_CASE_ENTITY,
+  entityPlural: entities.{{CAMEL_CASE_ENTITY}}.KEBAB_CASE_ENTITY_PLURAL,
+  frontEnd,
+  dto: {},
+};

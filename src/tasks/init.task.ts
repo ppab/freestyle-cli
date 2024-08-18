@@ -1,3 +1,5 @@
+import {PathDefinitionType} from "../types/global";
+
 type taskType = {
     name: string;
     args: {
@@ -10,10 +12,10 @@ export const init: taskType[] = [
         name: 'createFileWithCtx',
         args: {
             contentDestination: {
-                path: './freestyle/global.d.ts'
+                path: './freestyle/src/types/global.d.ts'
             },
             templateSource: {
-                path: './src/global.d.ts'
+                path: './src/types/global.d.ts'
             },
         }
     },

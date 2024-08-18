@@ -8,6 +8,7 @@ import {readJsonFile} from "./readJsonFile.command";
 import {deleteJsonKey} from "./deleteJsonKey.command";
 import {addJsonKey} from "./addJsonKey.command";
 import {addEntity} from "./addEntity.command";
+import {createFileFromEntriesCommand} from "./createFileFromEntries.command";
 
 export const commandStrategies =
     {
@@ -20,5 +21,6 @@ export const commandStrategies =
         writeFileSync,
         deleteJsonKey,
         addJsonKey,
-        addEntity
+        addEntity,
+        createFileFromEntriesCommand
     }

@@ -1,16 +1,22 @@
 {
-  "create_entity": [
+  "create_frontend_modules": [
     {
       "name": "pipe",
       "args": {
         "commands": [
           {
-            "name": "addEntity",
+            "name": "createFileFromEntriesCommand",
             "args": {
-              "filePath": "./src/templates/entities.json",
-              "content": {
-                "entityName": "test",
-                "entityPlural": "test list"
+              "entities": {
+                "filePath": "./freestyle/entities.json"
+              },
+              "frontEndModule": {
+                "contentDestination": {
+                  "path": "./freestyle/frontend-schemas/modules/{{PASCAL_CASE_ENTITY}}/index.ts"
+                },
+                "templateSource": {
+                  "path": "./src/templates/frontend-schemas/simple-schema.txt"
+                }
               }
             }
           }
