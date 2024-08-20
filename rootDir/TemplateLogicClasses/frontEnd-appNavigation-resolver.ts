@@ -21,7 +21,7 @@ export class FrontEndAppNavigationResolver {
     ];
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
+    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

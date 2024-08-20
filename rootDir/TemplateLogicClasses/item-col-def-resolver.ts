@@ -5,14 +5,26 @@ import { resolveType } from '../../src/factories/update.factory';
 import { colDefFieldFactory } from '../../src/factories/frontend/components/col-defs/colDefField.factory';
 import { colDefItemComponentsFactory } from '../../src/factories/frontend/components/col-defs/colDefItemComponents.factory';
 
-export class ListColDefResolver {
+export class ItemColDefResolver {
   contentDestinationTemplateString: string = `
-  {{LIST_COL_DEFS_IMPORTS}}
+type anyKey = { [key: string]: any };
+type AgiGridReactHOC = 'LinkButton' | 'DeleteButton';
+type AgiGridReactHelpers = 'reduxValueSetter' | 'reduxValueSetter2';
+type cellRenderer = [AgiGridReactHOC, anyKey];
+type valueSetter = [AgiGridReactHelpers, anyKey];
+type coldDefType = {
+  headerName?: string;
+  cellRenderer?: cellRenderer;
+  editable?: boolean; // if editable is not defined system defaults to 'editable:false'
+  field?: string;
+  valueSetter?: valueSetter; // if valueSetter is defined system defaults to 'editable:true',
+}; 
+  {{ITEM_COL_DEFS_IMPORTS}}
   
-  export const listColDef = {{LIST_COL_DEF}};
+  export const {{KEBAB_CASE_ENTITY}}ItemColDef : coldDefType[][] =  {{ITEM_COL_DEFS}};
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def.ts';
+    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY}}-item.col-def.ts';
 
   items: any[] = [];
   otherItems: any[] = [];
@@ -21,15 +33,7 @@ export class ListColDefResolver {
   formItemVariables: [string, string][] = [];
   formItemsResolved: string = '';
 
-  processItem(item: any) {
-    this.addToItems(item);
-    console.log('processing Item->>');
-    console.log('processing Item->>');
-    console.log('processing Item->>');
-    console.log('processing Item->>');
-    console.log('processing Item->>');
-    console.log('processing Item->>');
-    console.log('processing Item->>', item);
+  resolveEnums(item) {
     const type = resolveType(item?.type);
     if (type === 'enum') {
       const enumArgs = item?.enum;
@@ -66,6 +70,12 @@ export class ListColDefResolver {
   }
 
   addToItems(value: string) {
+    console.log('adding to Items->>>', value);
+    console.log('adding to Items->>>', value);
+    console.log('adding to Items->>>', value);
+    console.log('adding to Items->>>', value);
+    console.log('adding to Items->>>', value);
+    console.log('adding to Items->>>', value);
     this.items.push(value);
   }
 
@@ -74,30 +84,35 @@ export class ListColDefResolver {
   }
 
   processAllItems() {
-    const items = this.otherItems
-      .map((item: any) => {
-        if (typeof item === 'string') {
-          //TODO: make this return dynamic, based on the provided string such as '$.input'
-          return this.items;
+    console.log('proces-->this.items', this.items);
+    const itemsArr = this.items;
+    return itemsArr.map((arrItem) => {
+      console.log('arrItem-->>>', arrItem);
+      const allItems = this.otherItems
+        .map((item: any) => {
+          if (typeof item === 'string') {
+            //TODO: make this return dynamic, based on the provided string such as '$.input'
+            return arrItem;
+          }
+          return item;
+        })
+        .flat();
+
+      console.log('here-->>>');
+      console.log('here-->>>');
+      console.log('items->>', allItems);
+      console.log('here-->>>');
+
+      return allItems.map((item) => {
+        if (item?.field) {
+          console.log('itemField->', item);
+          return item;
         }
-        return item;
-      })
-      .flat();
-
-    console.log('here-->>>');
-    console.log('here-->>>');
-    console.log('items->>', items);
-    console.log('here-->>>');
-
-    return items.map((item) => {
-      if (item?.field) {
-        console.log('itemField->', item);
-        return item;
-      }
-      if (item?.component) {
-        const { component } = item;
-        return colDefItemComponentsFactory(component, item?.args);
-      }
+        if (item?.component) {
+          const { component } = item;
+          return colDefItemComponentsFactory(component, item?.args);
+        }
+      });
     });
   }
 
@@ -125,10 +140,17 @@ export class ListColDefResolver {
   }
 
   finalizeCtx() {
+    console.log('finalizeCTx->');
+    console.log('finalizeCTx->');
+    console.log('finalizeCTx->');
+    console.log('this.items->', this.items);
+
     const resolvedFormItems = this.replaceFormItemsVariables();
-    this.addToCtx('LIST_COL_DEFS_IMPORTS', this.importDefs.join(';\n'));
-    this.addToCtx('LIST_COL_DEF', resolvedFormItems);
-    console.log('CTX->', this.ctx);
+    const itemColDefsImports =
+      this.importDefs.length > 0 ? this.importDefs.join(';\n') : ' ';
+    this.addToCtx('ITEM_COL_DEFS_IMPORTS', itemColDefsImports);
+    this.addToCtx('ITEM_COL_DEFS', resolvedFormItems);
+    console.log('ctx in Item->', this.ctx);
   }
 
   createFile() {

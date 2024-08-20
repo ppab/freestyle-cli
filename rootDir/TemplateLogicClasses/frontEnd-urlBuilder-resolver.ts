@@ -1,7 +1,5 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { createEntityContext } from '../../src/lib/createEntityContext';
-import { routesGenericFactory } from '../../src/factories/routes-builder.factory';
-import urlBuilder from '../dist/emailsModule/frontend/emails/url-builder';
 import { urlBuilderFactory } from '../../src/factories/url-builder.factory';
 
 export class FrontEndUrlBuilderResolver {
@@ -21,7 +19,7 @@ export class FrontEndUrlBuilderResolver {
    export default {{URL_BUILDER}}
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
+    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

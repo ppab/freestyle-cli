@@ -26,7 +26,7 @@ export class FrontEndIndexResolver {
 };
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/resource.schema.ts';
+    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/resource.schema.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

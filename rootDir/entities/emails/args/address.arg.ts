@@ -8,7 +8,15 @@ export default entityArgsFactory
       editable: true,
       component: {
         list: {},
-        item: {},
+        item: [
+          [
+            {
+              field: 'address',
+              type: 'string',
+              editable: true,
+            },
+          ],
+        ],
         form: {},
       },
     },
@@ -18,7 +26,12 @@ export default entityArgsFactory
       },
     },
     backend: {
-      typeOrm: {},
+      typeOrm: {
+        decorators: [['Column', { args: { nullable: true } }]],
+        key: 'address',
+        isOptional: true,
+        type: 'string',
+      },
     },
   })
   .build();

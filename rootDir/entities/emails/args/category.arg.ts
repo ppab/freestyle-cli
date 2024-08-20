@@ -6,7 +6,16 @@ export default entityArgsFactory
     type: 'string',
     dto: {
       create: {
-        decorators: ['IsEnum'],
+        decorators: [
+          'IsString',
+          [
+            'IsEnum',
+            {
+              args: 'EmailCategory',
+              path: '../enums/email-category.enum',
+            },
+          ],
+        ],
       },
     },
     // ['enum', {name: 'EmailCategory', path: '../enums/address-category.enums'}],
@@ -20,14 +29,18 @@ export default entityArgsFactory
             { name: 'EmailCategory', path: '../enums/email-category.enum' },
           ],
         },
-        item: {
-          field: 'category',
-          editable: true,
-          type: [
-            'enum',
-            { name: 'EmailCategory', path: '../enums/email-category.enum' },
+        item: [
+          [
+            {
+              field: 'category',
+              editable: true,
+              type: [
+                'enum',
+                { name: 'EmailCategory', path: '../enums/email-category.enum' },
+              ],
+            },
           ],
-        },
+        ],
         form: {
           type: [
             'enum',
@@ -66,7 +79,12 @@ export default entityArgsFactory
     // },
 
     backend: {
-      typeOrm: {},
+      typeOrm: {
+        decorators: [['Column', { args: { nullable: true } }]],
+        key: 'category',
+        isOptional: true,
+        type: 'string',
+      },
     },
   })
   .build();

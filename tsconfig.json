@@ -12,6 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
+    "jsx": "react-jsx",
     "skipLibCheck": true,
     "strictNullChecks": false,
     "moduleResolution": "node",

@@ -5,17 +5,29 @@ export default {
   entity: 'email',
   entityPlural: 'emails',
   arguments: entityArguments,
+  rootDir: './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/',
   enums: [
     {
       name: 'EmailCategory',
       values: ['Primary', 'Secondary'],
       paths: [
-        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/backend/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
+        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
+        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
+      ],
+    },
+  ],
+  dto: [
+    {
+      name: 'create',
+      values: [],
+      paths: [
+        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-dto.ts',
+        './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
       ],
     },
   ],
   frontEnd: {
+    rootDir: 'frontend/',
     appNavigation: [
       {
         role: 'fullRole',
@@ -67,6 +79,7 @@ export default {
     },
   },
   backend: {
+    rootDir: 'backend/',
     typeOrm: {
       entityClassDecorator: 'Entity',
       sqlTable: '{{LOWERCASE_SNAKE_CASE_ENTITY_PLURAL}}',

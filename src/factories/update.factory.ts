@@ -260,7 +260,7 @@ export class EntityArgsItemFactory extends Factory<
     backend?: {
       typeOrm?: CreatePropertyOptional<
         TypeOrmEntity_Config_Interface,
-        'key' | 'type' | 'decorators'
+        'key' | 'type' | 'decorators' | 'isOptional'
       >;
     };
     frontEnd?: {
