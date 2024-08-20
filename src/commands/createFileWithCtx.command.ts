@@ -23,4 +23,20 @@ export function createFileWithCtx({contentDestination, templateSource, ctx}: cre
     createFileSync({filePath: destinationPath, content: contentWithCtx, forceCreation: true});
 
 }
+type createFileWithCtxArgsContent = {
+    contentDestination: PathDefinitionType
+    contentSource:string
+    ctx: { [key: string]: string }
+}
+
+export function createFileWithCtxContent({contentDestination, contentSource, ctx}: createFileWithCtxArgsContent) {
+
+
+    const contentWithCtx = strReplaceRegexMatchFromContext(contentSource, ctx)
+    console.log("contentWithCtx->>", contentWithCtx)
+
+    const destinationPath = resolveTemplatePathWithCtx(contentDestination, ctx)
+    createFileSync({filePath: destinationPath, content: contentWithCtx, forceCreation: true});
+
+}
 

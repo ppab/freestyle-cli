@@ -120,6 +120,7 @@ declare global {
         | 'IsBoolean'
         | 'IsDate'
         | 'IsEnum'
+        | 'IsEmail'
         | 'IsInt'
         | 'IsNumber'
         | 'IsObject'
