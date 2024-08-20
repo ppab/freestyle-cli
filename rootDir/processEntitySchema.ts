@@ -12,6 +12,7 @@ import { EnumResolver } from './TemplateLogicClasses/enum-resolver';
 import { FrontEndIndexResolver } from './TemplateLogicClasses/frontEnd-index-resolver';
 import { FrontEndRoutesResolver } from './TemplateLogicClasses/frontEnd-routes-resolver';
 import { ListColDefResolver } from './TemplateLogicClasses/list-col-def-resolver';
+import { FrontEndUrlBuilderResolver } from './TemplateLogicClasses/frontEnd-urlBuilder-resolver';
 
 type ArgsSchema = {
   name: string;
@@ -119,6 +120,11 @@ async function processEntitySchema(path: string) {
   FrontEndIndexResolver.create(schema.entity, schema.entityPlural);
   FrontEndRoutesResolver.create(
     frontEndRoutes,
+    schema.entity,
+    schema.entityPlural,
+  );
+  FrontEndUrlBuilderResolver.create(
+    schema.frontEnd.urlBuilder,
     schema.entity,
     schema.entityPlural,
   );

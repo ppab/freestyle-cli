@@ -6,9 +6,9 @@ export class FrontEndIndexResolver {
    import { listColDef } from './col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def';
    import  createForm  from './forms/create.forms';
    import { routes } from './routes';
+   import  urlBuilder  from './url-builder';
    import { appNavigation } from './appNavigation';
    import { itemColDef } from './item.col-def';
-   import { urlBuilder } from './url-builder';
    
    export default {
    name: '{{PASCAL_CASE_ENTITY_PLURAL}}',

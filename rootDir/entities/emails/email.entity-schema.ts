@@ -29,7 +29,7 @@ export default {
       },
     ],
     urlBuilder: {
-      relations: [''],
+      relations: ['test-relation', 'test'],
     },
     routes: [],
     components: {

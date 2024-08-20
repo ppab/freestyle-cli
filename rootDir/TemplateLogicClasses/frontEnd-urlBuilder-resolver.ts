@@ -1,45 +1,29 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { createEntityContext } from '../../src/lib/createEntityContext';
 import { routesGenericFactory } from '../../src/factories/routes-builder.factory';
+import urlBuilder from '../dist/emailsModule/frontend/emails/url-builder';
+import { urlBuilderFactory } from '../../src/factories/url-builder.factory';
 
 export class FrontEndUrlBuilderResolver {
   resolvedRoutes: any = [];
 
   constructor(
-    private readonly routes,
+    private readonly urlBuilder,
     private readonly entity,
     private readonly entityPlural: string,
   ) {
-    routes = this.routes;
+    urlBuilder = this.urlBuilder;
     entity = this.entity;
     entityPlural = this.entityPlural;
   }
 
   contentDestinationTemplateString: string = `
-    export const routes = [
-    {{FRONTEND_ROUTES}}
-    ];
+   export default {{URL_BUILDER}}
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
+    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
 
   ctx: { [key: string]: string } | {} = {};
-
-  resolveRoutes() {
-    const entityNameFormats = createEntityContext(
-      this.entity,
-      this.entityPlural,
-    );
-    const genericRoutes = [
-      ...routesGenericFactory.build({
-        KEBAB_CASE_ENTITY_PLURAL: entityNameFormats.KEBAB_CASE_ENTITY_PLURAL,
-        PASCAL_CASE_ENTITY: entityNameFormats.PASCAL_CASE_ENTITY,
-        PASCAL_CASE_ENTITY_PLURAL: entityNameFormats.PASCAL_CASE_ENTITY_PLURAL,
-      }),
-    ];
-
-    this.resolvedRoutes = [...genericRoutes, ...this.routes];
-  }
 
   addEntityFormatsToCtx() {
     console.log('addEntityToScema', arguments);
@@ -48,7 +32,14 @@ export class FrontEndUrlBuilderResolver {
   }
 
   finalizeCtx() {
-    this.addToCtx('FRONTEND_ROUTES', JSON.stringify(this.resolvedRoutes));
+    const textFormats = createEntityContext(this.entity, this.entityPlural);
+    const resolvedUrlBuilder = urlBuilderFactory
+      .generic({
+        relations: this.urlBuilder?.relations,
+        KEBAB_CASE_ENTITY_PLURAL: textFormats.KEBAB_CASE_ENTITY_PLURAL,
+      })
+      .build();
+    this.addToCtx('URL_BUILDER', JSON.stringify(resolvedUrlBuilder));
   }
 
   addToCtx(key, value) {
@@ -65,14 +56,13 @@ export class FrontEndUrlBuilderResolver {
     });
   }
 
-  static create(frontEndRoutes, entity, entityPlural) {
-    const frontEndRoutesResolver = new FrontEndRoutesResolver(
-      frontEndRoutes,
+  static create(urlBuilder, entity, entityPlural) {
+    const frontEndRoutesResolver = new FrontEndUrlBuilderResolver(
+      urlBuilder,
       entity,
       entityPlural,
     );
     frontEndRoutesResolver.addEntityFormatsToCtx();
-    frontEndRoutesResolver.resolveRoutes();
     frontEndRoutesResolver.finalizeCtx();
     frontEndRoutesResolver.createFile();
   }
