@@ -1,5 +1,5 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { routesGenericFactory } from '../../src/factories/routes-builder.factory';
 
 export class FrontEndAppNavigationResolver {
@@ -26,7 +26,7 @@ export class FrontEndAppNavigationResolver {
   ctx: { [key: string]: string } | {} = {};
 
   resolveRoutes() {
-    const entityNameFormats = createEntityContext(
+    const entityNameFormats = createEntityTextFormatsCtx(
       this.entity,
       this.entityPlural,
     );
@@ -43,7 +43,7 @@ export class FrontEndAppNavigationResolver {
 
   addEntityFormatsToCtx() {
     console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(this.entity, this.entityPlural);
+    const obj = createEntityTextFormatsCtx(this.entity, this.entityPlural);
     this.ctx = { ...this.ctx, ...obj };
   }
 

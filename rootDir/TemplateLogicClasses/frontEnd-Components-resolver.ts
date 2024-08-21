@@ -1,7 +1,5 @@
-import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { createEntityContext } from '../../src/lib/createEntityContext';
-
-export class FrontEndComponentsResolver {
+import { ResolverBaseClass } from './resolver-base-class';
+export class FrontEndComponentsResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
 import Slice from "../../store/{{KEBAB_CASE_ENTITY_PLURAL}}-slice"
 import {BuildComponents} from "../../components/Refactor/BuildComponents";
@@ -24,27 +22,9 @@ export const {{PASCAL_CASE_ENTITY_PLURAL}}Components = BuildComponents({
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/{{PASCAL_CASE_ENTITY_PLURAL}}.components.tsx';
 
-  ctx: { [key: string]: string } | {} = {};
-
-  addEntityFormatsToCtx(entity, entityPlural) {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
-  }
-
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
-  }
-
-  static create(entity, entityPlural) {
-    const frontEndIndexResolver = new FrontEndComponentsResolver();
-    frontEndIndexResolver.addEntityFormatsToCtx(entity, entityPlural);
-    frontEndIndexResolver.createFile();
+  static create(entityName: { singular: string; plural: string }) {
+    const resolver = new FrontEndComponentsResolver();
+    resolver.setEntity(entityName);
+    resolver.execute();
   }
 }

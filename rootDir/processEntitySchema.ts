@@ -1,19 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 import { FormComponentResolver } from './TemplateLogicClasses/form-component-resolver';
-import { EnumResolver } from './TemplateLogicClasses/enum-resolver';
 import { FrontEndIndexResolver } from './TemplateLogicClasses/frontEnd-index-resolver';
 import { FrontEndRoutesResolver } from './TemplateLogicClasses/frontEnd-routes-resolver';
 import { ListColDefResolver } from './TemplateLogicClasses/list-col-def-resolver';
 import { FrontEndUrlBuilderResolver } from './TemplateLogicClasses/frontEnd-urlBuilder-resolver';
 import { FrontEndPagesResolver } from './TemplateLogicClasses/frontEnd-pages-resolver';
 import { FrontEndComponentsResolver } from './TemplateLogicClasses/frontEnd-Components-resolver';
-import { DtoResolver } from './TemplateLogicClasses/dto-resolver';
 import { FrontEndEntityComponentResolver } from './TemplateLogicClasses/frontEnd-entity-component-resolver';
 import { ItemColDefResolver } from './TemplateLogicClasses/item-col-def-resolver';
-import { FrontEndEntitySliceResolver } from './TemplateLogicClasses/frontEnd-entity-slice-resolver';
 import { BackendSystemInputResolver } from './TemplateLogicClasses/backend-system-input-resolver';
 import { BackendSystemInputListResolver } from './TemplateLogicClasses/backend-system-input-list-resolver';
+import { FrontendAppModuleListResolver } from './TemplateLogicClasses/frontend-app-module-list-resolver';
+import { FrontEndModuleResolver } from './TemplateLogicClasses/frontEnd-module-resolver';
+import { FrontendStoreListResolver } from './TemplateLogicClasses/frontend-store-list-resolver';
+import { FrontEndEntitySliceResolver } from './TemplateLogicClasses/frontEnd-entity-slice-resolver';
+
+/////////
+import { EnumResolver } from './TemplateLogicClasses/enum-resolver';
+import { DtoResolver } from './TemplateLogicClasses/dto-resolver';
+import { EntitySchema } from './TemplateLogicClasses/resolver-base-class';
 
 type ArgsSchema = {
   name: string;
@@ -36,100 +42,39 @@ async function loadModule(filePath: string) {
   }
 }
 
-async function processFrontEndListItem(
-  formArgs: any,
-  myClass: ListColDefResolver,
-) {
-  myClass.processItem(formArgs);
-}
-
-async function processFrontEndComponentItem(
-  formArgs: any,
-  myClass: ItemColDefResolver,
-) {
-  myClass.addToItems(formArgs);
-}
-
 async function processFrontEnd(
   args: ArgsSchema,
   formItemComponentResolver,
   listColDefResolver,
   itemColDefResolver,
-) {
-  console.log('fronEnd', args.frontEnd);
-  const importDefs = [];
-  const enumsCtx = {};
-
-  processFrontEndComponentForm(
-    args.frontEnd.component.form,
-    formItemComponentResolver,
-  );
-
-  processFrontEndComponentItem(
-    args.frontEnd.component.item,
-    itemColDefResolver,
-  );
-  processFrontEndListItem(args.frontEnd.component.list, listColDefResolver);
-}
-
-async function processFrontEndComponentForm(
-  formArgs: any,
-  myClass: FormComponentResolver,
-) {
-  myClass.processItem(formArgs);
-}
-
-async function processBackend(
-  args: ArgsSchema,
-  backendSystemInputResolver: BackendSystemInputResolver,
-) {
-  console.log('backend', args.backend);
-
-  backendSystemInputResolver.addTypeOrmProperties(args.backend.typeOrm);
-  backendSystemInputResolver.addToDtoCreate(args.dto.create);
-}
+) {}
 
 async function processDto(args: ArgsSchema, dtoResolver: DtoResolver) {
   console.log('dto', args.dto);
   dtoResolver.addToItems(args.dto.create);
 }
 
-async function processArgs(
-  args: ArgsSchema[],
-  formComponentResolver,
-  listColDefResolver,
-  dtoResolver,
-  itemColDefResolver,
-  typeOrmResolver,
-) {
+async function processArgs(args: ArgsSchema[], dtoResolver, argumentResolvers) {
   console.log(args);
 
   const processedArgs = args;
+
   for (const arg of args) {
-    processBackend(arg, typeOrmResolver);
-    processFrontEnd(
-      arg,
-      formComponentResolver,
-      listColDefResolver,
-      itemColDefResolver,
-    );
+    argumentResolvers.forEach((Resolver) => Resolver.processArgument(args));
+
     processDto(arg, dtoResolver);
   }
   return processedArgs;
 }
 
-async function processEntitySchema(schema) {
+async function processEntitySchema(
+  schema,
+  entityName: { singular: string; plural: string },
+  argumentResolvers,
+) {
   const args = schema.arguments;
   const enums = schema.enums;
-  const frontEndRoutes = schema.frontEnd.routes;
 
-  const formComponentResolver = new FormComponentResolver();
-  const listColDefResolver = new ListColDefResolver();
-  const itemColDefResolver = new ItemColDefResolver();
-  const backendSystemInputResolver = new BackendSystemInputResolver(
-    schema.entity,
-    schema.entityPlural,
-  );
   const createDtoConfig = schema.dto.find((d) => d.name === 'create');
   const createDtoResolver = new DtoResolver(
     schema.entity,
@@ -137,82 +82,70 @@ async function processEntitySchema(schema) {
     createDtoConfig.paths,
   );
 
-  formComponentResolver.addEntityFormatsToCtx(
-    schema.entity,
-    schema.entityPlural,
-  );
-  listColDefResolver.addEntityFormatsToCtx(schema.entity, schema.entityPlural);
-
-  //// Initiate processing arguments->>>>
-  processArgs(
-    args,
-    formComponentResolver,
-    listColDefResolver,
-    createDtoResolver,
-    itemColDefResolver,
-    backendSystemInputResolver,
-  );
-  //// Finish processing arguments->>>>
-
-  formComponentResolver.finalizeCtx();
-  formComponentResolver.createFile();
-
-  backendSystemInputResolver.setEnums(schema.enums);
-  backendSystemInputResolver.setTypeOrm(schema.backend.typeOrm);
-  backendSystemInputResolver.finalizeCtx();
-  backendSystemInputResolver.createFile();
+  // Initiate processing arguments->>>>
+  //----------------------------------------------------------
+  processArgs(args, createDtoResolver, argumentResolvers);
+  ///---Special case
 
   if (enums.length > 0) {
     EnumResolver.createMultiple(enums, schema.entity, schema.entityPlural);
   }
 
-  FrontEndIndexResolver.create(schema.entity, schema.entityPlural);
-  FrontEndRoutesResolver.create(
-    frontEndRoutes,
-    schema.entity,
-    schema.entityPlural,
-  );
-  FrontEndUrlBuilderResolver.create(
-    schema.frontEnd.urlBuilder,
-    schema.entity,
-    schema.entityPlural,
-  );
-  FrontEndPagesResolver.create(schema.entity, schema.entityPlural);
-  FrontEndComponentsResolver.create(schema.entity, schema.entityPlural);
-  FrontEndEntityComponentResolver.create(schema.entity, schema.entityPlural);
-  FrontEndEntitySliceResolver.create(schema.entity, schema.entityPlural);
-
+  ////-----!SPECIAL CASE-->>>>>>>>>>> backendSystemInputResolver
   createDtoResolver.execute();
   createDtoResolver.createMultiple();
-
-  listColDefResolver.setOtherItems(
-    schema.frontEnd.components.list.colDefinitions,
-  );
-  listColDefResolver.finalizeCtx();
-  listColDefResolver.createFile();
-
-  itemColDefResolver.addEntityFormatsToCtx(schema.entity, schema.entityPlural);
-  itemColDefResolver.finalizeCtx();
-  itemColDefResolver.createFile();
 }
+
+const entityNameFactory = (singular: string, plural: string) => ({
+  singular,
+  plural,
+});
 
 async function processEntities(path) {
   const module = await loadModule(path);
-  const entities = module.entities;
-  const entitiesArr = [];
+  const entities = module.entities as EntitySchema[];
 
   if (entities.length > 0) {
-    const backendSystemInputListResolver = new BackendSystemInputListResolver();
-    for (const entity of entities) {
-      console.log('processing entity->>', entity['entity']);
-      backendSystemInputListResolver.addImport(
-        entity['entity'],
-        entity['entityPlural'],
+    const processMultipleEntityResolvers = [
+      new BackendSystemInputListResolver(),
+      new FrontendAppModuleListResolver(),
+      new FrontendStoreListResolver(),
+    ];
+    const setEntityResolvers = [
+      new FrontEndIndexResolver(),
+      new FrontEndPagesResolver(),
+      new FrontEndComponentsResolver(),
+      new FrontEndEntityComponentResolver(),
+      new FrontEndUrlBuilderResolver(),
+      new FrontEndRoutesResolver(),
+      new FrontEndModuleResolver(),
+      new FrontEndEntitySliceResolver(),
+    ];
+
+    const argumentResolvers = [
+      new FormComponentResolver(),
+      new ListColDefResolver(),
+      new ItemColDefResolver(),
+      new BackendSystemInputResolver(),
+    ];
+
+    for (const schema of entities) {
+      const entityName = entityNameFactory(schema.entity, schema.entityPlural);
+      processMultipleEntityResolvers.forEach((Resolver) =>
+        Resolver.processEntity(entityName),
       );
-      processEntitySchema(entity);
+      setEntityResolvers.forEach((Resolver) => Resolver.setSchema(schema));
+      argumentResolvers.forEach((Resolver) => Resolver.setSchema(schema));
+
+      processEntitySchema(schema.entity, entityName, argumentResolvers);
     }
-    backendSystemInputListResolver.finalizeCtx();
-    backendSystemInputListResolver.createFile();
+    const allResolvers = [
+      processMultipleEntityResolvers,
+      setEntityResolvers,
+      argumentResolvers,
+    ].flat();
+
+    allResolvers.forEach((Resolver) => Resolver.execute());
   }
 }
 

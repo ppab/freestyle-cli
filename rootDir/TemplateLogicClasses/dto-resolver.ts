@@ -1,6 +1,6 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { TextFormatGenerator } from '../../src/lib/text-format-generator';
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { DTO_Config_Interface } from '../../src/types/global';
 
 export class DtoResolver {
@@ -105,7 +105,7 @@ export class DtoResolver {
 
   addEntityFormatsToCtx() {
     console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(this.entity, this.entityPlural);
+    const obj = createEntityTextFormatsCtx(this.entity, this.entityPlural);
     this.ctx = { ...this.ctx, ...obj };
   }
 
@@ -136,7 +136,10 @@ export class DtoResolver {
 
     this.addToCtx('DTO_OTHER_IMPORTS_JOIN', otherImportsJoin);
 
-    const entityFormats = createEntityContext(this.entity, this.entityPlural);
+    const entityFormats = createEntityTextFormatsCtx(
+      this.entity,
+      this.entityPlural,
+    );
     this.addToCtx('DTO_CLASS_NAME', `${entityFormats.PASCAL_CASE_ENTITY}Dto`);
   }
 
@@ -167,4 +170,4 @@ export class DtoResolver {
 }
 
 ///clase processEntity
-// createEntityContext
+// createEntityTextFormatsCtx

@@ -1,6 +1,6 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { TextFormatGenerator } from '../../src/lib/text-format-generator';
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 
 export class EnumResolver {
   contentDestinationTemplateString: string = `
@@ -16,7 +16,7 @@ export class EnumResolver {
 
   addEntityFormatsToCtx(entity, entityPlural) {
     console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
+    const obj = createEntityTextFormatsCtx(entity, entityPlural);
     this.ctx = { ...this.ctx, ...obj };
   }
 

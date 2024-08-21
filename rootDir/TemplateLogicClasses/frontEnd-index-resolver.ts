@@ -1,7 +1,8 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class FrontEndIndexResolver {
+export class FrontEndIndexResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
    import { listColDef } from './col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def';
    import  createForm  from './forms/create.forms';
@@ -28,33 +29,13 @@ export class FrontEndIndexResolver {
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/resource.schema.ts';
 
-  ctx: { [key: string]: string } | {} = {};
-
-  addEntityFormatsToCtx(entity, entityPlural) {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
+  public execute() {
+    this.addEntityFormatsToCtx();
+    this.createFile();
   }
-
-  finalizeCtx() {}
-
-  addToCtx(key, value) {
-    this.ctx[key] = value;
-  }
-
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
-  }
-
-  static create(entity, entityPlural) {
-    const frontEndIndexResolver = new FrontEndIndexResolver();
-    frontEndIndexResolver.addEntityFormatsToCtx(entity, entityPlural);
-    frontEndIndexResolver.createFile();
+  static create(entityName: { singular: string; plural: string }) {
+    const resolver = new FrontEndIndexResolver();
+    resolver.setEntity(entityName);
+    resolver.execute();
   }
 }

@@ -1,11 +1,12 @@
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { strReplaceRegexMatchFromContextRemoveString } from '../../src/lib/strReplaceRegexMatchFromContext';
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { resolveType } from '../../src/factories/update.factory';
 import { colDefFieldFactory } from '../../src/factories/frontend/components/col-defs/colDefField.factory';
 import { colDefItemComponentsFactory } from '../../src/factories/frontend/components/col-defs/colDefItemComponents.factory';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class ListColDefResolver {
+export class ListColDefResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
   {{LIST_COL_DEFS_IMPORTS}}
   
@@ -16,10 +17,14 @@ export class ListColDefResolver {
 
   items: any[] = [];
   otherItems: any[] = [];
-  ctx: { [key: string]: string } | {} = {};
   importDefs: string[] = [];
   formItemVariables: [string, string][] = [];
   formItemsResolved: string = '';
+
+  processArgument(args) {
+    const item = args.frontEnd.component.list;
+    this.processItem(item);
+  }
 
   processItem(item: any) {
     this.addToItems(item);
@@ -45,16 +50,6 @@ export class ListColDefResolver {
       console.log('enum import->>>>>', importStr);
       console.log('formItemVariables', this.formItemVariables);
     }
-  }
-
-  addEntityFormatsToCtx(entity, entityPlural) {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
-  }
-
-  addToCtx(key, value) {
-    this.ctx[key] = value;
   }
 
   addToFormItemsVariables(ctxKey, regex) {
@@ -120,24 +115,21 @@ export class ListColDefResolver {
     return this.formItemsResolved;
   }
 
-  setOtherItems(otherItems) {
-    this.otherItems = otherItems;
+  setOtherItems() {
+    this.otherItems = this.schema.frontEnd.components.list.colDefinitions;
   }
 
   finalizeCtx() {
+    this.setOtherItems();
     const resolvedFormItems = this.replaceFormItemsVariables();
     this.addToCtx('LIST_COL_DEFS_IMPORTS', this.importDefs.join(';\n'));
     this.addToCtx('LIST_COL_DEF', resolvedFormItems);
     console.log('CTX->', this.ctx);
   }
 
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
+  execute() {
+    this.addEntityFormatsToCtx();
+    this.finalizeCtx();
+    this.createFile();
   }
 }

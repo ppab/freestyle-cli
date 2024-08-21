@@ -1,11 +1,12 @@
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { strReplaceRegexMatchFromContextRemoveString } from '../../src/lib/strReplaceRegexMatchFromContext';
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { resolveType } from '../../src/factories/update.factory';
 import { colDefFieldFactory } from '../../src/factories/frontend/components/col-defs/colDefField.factory';
 import { colDefItemComponentsFactory } from '../../src/factories/frontend/components/col-defs/colDefItemComponents.factory';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class ItemColDefResolver {
+export class ItemColDefResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
 type anyKey = { [key: string]: any };
 type AgiGridReactHOC = 'LinkButton' | 'DeleteButton';
@@ -32,28 +33,13 @@ type coldDefType = {
   importDefs: string[] = [];
   formItemVariables: [string, string][] = [];
   formItemsResolved: string = '';
+  entityName: { singular: string; plural: string };
 
-  resolveEnums(item) {
-    const type = resolveType(item?.type);
-    if (type === 'enum') {
-      const enumArgs = item?.enum;
-      const ctxObj = {};
-      const key = `ENUM_${enumArgs.name}`;
-      const value = enumArgs.name;
-      const importStr = `import {${enumArgs.name}} from '${enumArgs.path}'`;
-      this.addToCtx(key, value);
-      const reString = `"{{${key}}}"`;
-      const regex = new RegExp(reString, 'g');
-      this.addToFormItemsVariables(key, regex);
-      this.addToImportDefs(importStr);
-      console.log('enum import->>>>>', importStr);
-      console.log('formItemVariables', this.formItemVariables);
-    }
-  }
-
-  addEntityFormatsToCtx(entity, entityPlural) {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
+  addEntityFormatsToCtx() {
+    const obj = createEntityTextFormatsCtx(
+      this.entityName.singular,
+      this.entityName.plural,
+    );
     this.ctx = { ...this.ctx, ...obj };
   }
 
@@ -61,12 +47,9 @@ type coldDefType = {
     this.ctx[key] = value;
   }
 
-  addToFormItemsVariables(ctxKey, regex) {
-    this.formItemVariables.push([ctxKey, regex]);
-  }
-
-  addToImportDefs(value: string) {
-    this.importDefs.push(value);
+  processArgument(args) {
+    const item = args.frontEnd.component.item;
+    this.addToItems(item);
   }
 
   addToItems(value: string) {
@@ -161,5 +144,11 @@ type coldDefType = {
       contentSource: this.contentDestinationTemplateString,
       ctx: this.ctx,
     });
+  }
+
+  execute() {
+    this.addEntityFormatsToCtx();
+    this.finalizeCtx();
+    this.createFile();
   }
 }

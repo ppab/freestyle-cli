@@ -1,19 +1,8 @@
-import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { createEntityContext } from '../../src/lib/createEntityContext';
 import { routesGenericFactory } from '../../src/factories/routes-builder.factory';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class FrontEndRoutesResolver {
+export class FrontEndRoutesResolver extends ResolverBaseClass {
   resolvedRoutes: any = [];
-
-  constructor(
-    private readonly routes,
-    private readonly entity,
-    private readonly entityPlural: string,
-  ) {
-    routes = this.routes;
-    entity = this.entity;
-    entityPlural = this.entityPlural;
-  }
 
   contentDestinationTemplateString: string = `
     export const routes = [
@@ -23,54 +12,28 @@ export class FrontEndRoutesResolver {
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
 
-  ctx: { [key: string]: string } | {} = {};
-
   resolveRoutes() {
-    const entityNameFormats = createEntityContext(
-      this.entity,
-      this.entityPlural,
-    );
     const genericRoutes = [
       ...routesGenericFactory.build({
-        KEBAB_CASE_ENTITY_PLURAL: entityNameFormats.KEBAB_CASE_ENTITY_PLURAL,
-        PASCAL_CASE_ENTITY: entityNameFormats.PASCAL_CASE_ENTITY,
-        PASCAL_CASE_ENTITY_PLURAL: entityNameFormats.PASCAL_CASE_ENTITY_PLURAL,
+        KEBAB_CASE_ENTITY_PLURAL:
+          this.entityTextFormats.KEBAB_CASE_ENTITY_PLURAL,
+        PASCAL_CASE_ENTITY: this.entityTextFormats.PASCAL_CASE_ENTITY,
+        PASCAL_CASE_ENTITY_PLURAL:
+          this.entityTextFormats.PASCAL_CASE_ENTITY_PLURAL,
       }),
     ];
 
-    this.resolvedRoutes = [...genericRoutes, ...this.routes];
-  }
-
-  addEntityFormatsToCtx() {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(this.entity, this.entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
+    this.resolvedRoutes = [...genericRoutes, ...this.schema.frontEnd.routes];
   }
 
   finalizeCtx() {
+    this.resolveRoutes();
     this.addToCtx('FRONTEND_ROUTES', JSON.stringify(this.resolvedRoutes));
   }
 
-  addToCtx(key, value) {
-    this.ctx[key] = value;
-  }
-
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
-  }
-
-  static create(frontEndRoutes, entity, entityPlural) {
-    const frontEndRoutesResolver = new FrontEndRoutesResolver(
-      frontEndRoutes,
-      entity,
-      entityPlural,
-    );
+  static create(schema) {
+    const frontEndRoutesResolver = new FrontEndRoutesResolver();
+    frontEndRoutesResolver.setSchema(schema);
     frontEndRoutesResolver.addEntityFormatsToCtx();
     frontEndRoutesResolver.resolveRoutes();
     frontEndRoutesResolver.finalizeCtx();

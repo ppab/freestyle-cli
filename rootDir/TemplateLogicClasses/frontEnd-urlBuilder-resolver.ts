@@ -1,19 +1,9 @@
-import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { createEntityContext } from '../../src/lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { urlBuilderFactory } from '../../src/factories/url-builder.factory';
+import { ResolverBaseClass, EntitySchema } from './resolver-base-class';
 
-export class FrontEndUrlBuilderResolver {
+export class FrontEndUrlBuilderResolver extends ResolverBaseClass {
   resolvedRoutes: any = [];
-
-  constructor(
-    private readonly urlBuilder,
-    private readonly entity,
-    private readonly entityPlural: string,
-  ) {
-    urlBuilder = this.urlBuilder;
-    entity = this.entity;
-    entityPlural = this.entityPlural;
-  }
 
   contentDestinationTemplateString: string = `
    export default {{URL_BUILDER}}
@@ -21,47 +11,23 @@ export class FrontEndUrlBuilderResolver {
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
 
-  ctx: { [key: string]: string } | {} = {};
-
-  addEntityFormatsToCtx() {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(this.entity, this.entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
-  }
-
   finalizeCtx() {
-    const textFormats = createEntityContext(this.entity, this.entityPlural);
+    const textFormats = createEntityTextFormatsCtx(
+      this.schema.entity,
+      this.schema.entityPlural,
+    );
     const resolvedUrlBuilder = urlBuilderFactory
       .generic({
-        relations: this.urlBuilder?.relations,
+        relations: this.schema.frontEnd.urlBuilder.relations,
         KEBAB_CASE_ENTITY_PLURAL: textFormats.KEBAB_CASE_ENTITY_PLURAL,
       })
       .build();
     this.addToCtx('URL_BUILDER', JSON.stringify(resolvedUrlBuilder));
   }
 
-  addToCtx(key, value) {
-    this.ctx[key] = value;
-  }
-
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
-  }
-
-  static create(urlBuilder, entity, entityPlural) {
-    const frontEndRoutesResolver = new FrontEndUrlBuilderResolver(
-      urlBuilder,
-      entity,
-      entityPlural,
-    );
-    frontEndRoutesResolver.addEntityFormatsToCtx();
-    frontEndRoutesResolver.finalizeCtx();
-    frontEndRoutesResolver.createFile();
+  static create(schema: EntitySchema) {
+    const frontEndRoutesResolver = new FrontEndUrlBuilderResolver();
+    frontEndRoutesResolver.setSchema(schema);
+    frontEndRoutesResolver.execute();
   }
 }

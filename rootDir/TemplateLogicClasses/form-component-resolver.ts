@@ -1,9 +1,7 @@
-import { createEntityContext } from '../../src/lib/createEntityContext';
-import { strReplaceRegexMatchFromContextRemoveString } from '../../src/lib/strReplaceRegexMatchFromContext';
-import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { resolveType } from '../../src/factories/update.factory';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class FormComponentResolver {
+export class FormComponentResolver extends ResolverBaseClass {
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/forms/create.form.ts';
 
@@ -14,10 +12,14 @@ export class FormComponentResolver {
     `;
 
   items: any[] = [];
-  ctx: { [key: string]: string } | {} = {};
   importDefs: string[] = [];
   formItemVariables: [string, string][] = [];
   formItemsResolved: string = '';
+
+  processArgument(args) {
+    const item = args.frontEnd.component.form;
+    this.processItem(item);
+  }
 
   processItem(item: any) {
     this.addToItems(item);
@@ -36,16 +38,6 @@ export class FormComponentResolver {
     }
   }
 
-  addEntityFormatsToCtx(entity, entityPlural) {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityContext(entity, entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
-  }
-
-  addToCtx(key, value) {
-    this.ctx[key] = value;
-  }
-
   addToFormItemsVariables(ctxKey, regex) {
     this.formItemVariables.push([ctxKey, regex]);
   }
@@ -56,10 +48,6 @@ export class FormComponentResolver {
 
   addToItems(value: string) {
     this.items.push(value);
-  }
-
-  replaceString(str, content, regex) {
-    return strReplaceRegexMatchFromContextRemoveString(str, content, regex);
   }
 
   replaceFormItemsVariables() {
@@ -82,15 +70,5 @@ export class FormComponentResolver {
     const resolvedFormItems = this.replaceFormItemsVariables();
     this.addToCtx('FORM_CREATE_IMPORT_DEFS', this.importDefs.join(';\n'));
     this.addToCtx('FORM_CREATE_FORM_ITEMS', resolvedFormItems);
-  }
-
-  createFile() {
-    createFileWithCtxContent({
-      contentDestination: {
-        path: this.contentDestinationPath,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
   }
 }

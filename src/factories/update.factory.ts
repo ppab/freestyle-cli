@@ -3,7 +3,7 @@ import {
   TypeOrmEntity_Config_Interface,
 } from '../types/global';
 import { Factory } from 'fishery';
-import { createEntityContext } from '../lib/createEntityContext';
+import { createEntityTextFormatsCtx } from '../lib/createEntityTextFormatsCtx';
 import { urlBuilderFactory } from './url-builder.factory';
 import { routesGenericFactory } from './routes-builder.factory';
 import { createFileSync } from '../commands/createFileSync.command';
@@ -562,7 +562,7 @@ const buildArgsSchema = (entityArgs /*:AllOptionsEntityArgs[]*/) => {
 // };
 
 function processEntity(entity) {
-  const entityNameFormats = createEntityContext(
+  const entityNameFormats = createEntityTextFormatsCtx(
     entity.entity,
     entity.entityPlural,
   );
@@ -631,14 +631,14 @@ function processEntity(entity) {
 function createSystemInputs(entities) {
   entities.forEach((entity) => processEntity(entity));
   const imports = entities.map((entity) => {
-    const entityNameFormats = createEntityContext(
+    const entityNameFormats = createEntityTextFormatsCtx(
       entity.entity,
       entity.entityPlural,
     );
     return `import ${entityNameFormats.CAMEL_CASE_ENTITY_PLURAL} from './${entityNameFormats.KEBAB_CASE_ENTITY_PLURAL}.json'`;
   });
   const arrItems = entities.map((entity) => {
-    const entityNameFormats = createEntityContext(
+    const entityNameFormats = createEntityTextFormatsCtx(
       entity.entity,
       entity.entityPlural,
     );
