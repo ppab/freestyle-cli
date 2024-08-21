@@ -19,7 +19,7 @@ export class FrontEndUrlBuilderResolver {
    export default {{URL_BUILDER}}
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/url-builder.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

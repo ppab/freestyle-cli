@@ -29,8 +29,7 @@ export default {
 }
 
  `;
-  contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/store/store.ts';
+  contentDestinationPath: string = './rootDir/dist/frontend/store/store.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

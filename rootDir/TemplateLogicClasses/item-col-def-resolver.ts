@@ -24,7 +24,7 @@ type coldDefType = {
   export const {{KEBAB_CASE_ENTITY}}ItemColDef : coldDefType[][] =  {{ITEM_COL_DEFS}};
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY}}-item.col-def.ts';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY}}-item.col-def.ts';
 
   items: any[] = [];
   otherItems: any[] = [];

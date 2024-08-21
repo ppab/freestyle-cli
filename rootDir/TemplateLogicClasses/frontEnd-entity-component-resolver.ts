@@ -25,7 +25,7 @@ export class FrontEndEntityComponentResolver {
     </div>}
  `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/{{PASCAL_CASE_ENTITY}}.tsx';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/{{PASCAL_CASE_ENTITY}}.tsx';
 
   ctx: { [key: string]: string } | {} = {};
 

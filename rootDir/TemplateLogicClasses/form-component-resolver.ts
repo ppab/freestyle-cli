@@ -5,7 +5,7 @@ import { resolveType } from '../../src/factories/update.factory';
 
 export class FormComponentResolver {
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/forms/create.form.ts';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/forms/create.form.ts';
 
   contentDestinationTemplateString: string = `
     {{FORM_CREATE_IMPORT_DEFS}}

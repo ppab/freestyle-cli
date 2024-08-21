@@ -28,7 +28,6 @@ export class DtoResolver {
   ) {
     this.entity = entity;
     this.entityPlural = entityPlural;
-    this.contentDestinationPaths = contentDestinationPaths;
   }
 
   addToItems(value: DTO_Config_Interface) {

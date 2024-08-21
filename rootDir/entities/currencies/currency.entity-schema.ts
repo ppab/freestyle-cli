@@ -2,27 +2,18 @@ import { entityArguments } from './args';
 import { routesFactory } from '../../../src/factories/routes-builder.factory';
 
 export default {
-  entity: 'email',
-  entityPlural: 'emails',
+  entity: 'currency',
+  entityPlural: 'currencies',
   arguments: entityArguments,
   rootDir: './rootDir/dist/',
-  enums: [
-    {
-      name: 'EmailCategory',
-      values: ['Primary', 'Secondary'],
-      paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-      ],
-    },
-  ],
+  enums: [],
   dto: [
     {
       name: 'create',
       values: [],
       paths: [
         './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-dto.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
+        // './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
       ],
     },
   ],
@@ -64,15 +55,10 @@ export default {
       forms: {
         create: {
           dto: {
-            name: 'CreateEmailDto',
-            path: './dto/create-email.dto',
+            name: 'CreateCurrencyDto',
+            path: './dto/create-currency.dto',
           },
-          enums: [
-            {
-              name: 'EmailCategory',
-              path: './enums/email-category.enum',
-            },
-          ],
+          enums: [],
           formElements: [],
         },
       },

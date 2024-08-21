@@ -22,7 +22,7 @@ export class FrontEndPagesResolver {
 
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/Pages.tsx';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/Pages.tsx';
 
   ctx: { [key: string]: string } | {} = {};
 

@@ -12,7 +12,7 @@ export class ListColDefResolver {
   export const listColDef = {{LIST_COL_DEF}};
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def.ts';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def.ts';
 
   items: any[] = [];
   otherItems: any[] = [];

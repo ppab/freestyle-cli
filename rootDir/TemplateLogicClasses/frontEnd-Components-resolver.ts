@@ -22,7 +22,7 @@ export const {{PASCAL_CASE_ENTITY_PLURAL}}Components = BuildComponents({
 
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/{{PASCAL_CASE_ENTITY_PLURAL}}.components.tsx';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/{{PASCAL_CASE_ENTITY_PLURAL}}.components.tsx';
 
   ctx: { [key: string]: string } | {} = {};
 

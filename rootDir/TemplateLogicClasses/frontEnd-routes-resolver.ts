@@ -21,7 +21,7 @@ export class FrontEndRoutesResolver {
     ];
     `;
   contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
+    './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';
 
   ctx: { [key: string]: string } | {} = {};
 

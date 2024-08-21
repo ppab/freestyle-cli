@@ -4,8 +4,8 @@ import { createEntityContext } from '../../src/lib/createEntityContext';
 export class BackendSystemInputResolver {
   contentDestinationTemplateString: string = `
   import { SystemInput } from '../bin/nestjs-typeorm-crud/types';
-
-export const SI{{PASCAL_CASE_ENTITY}}: SystemInput ={{ENTITIES_DEFINITIONS}} 
+  
+  export const SI{{PASCAL_CASE_ENTITY}}: SystemInput ={{ENTITIES_DEFINITIONS}} 
   
  
     `;
@@ -17,7 +17,7 @@ export const SI{{PASCAL_CASE_ENTITY}}: SystemInput ={{ENTITIES_DEFINITIONS}}
   typeOrmProperties = [];
   typeOrm: { [key: string]: any };
   private readonly contentDestinationPath: string =
-    './rootDir/dist/{{KEBAB_CASE_ENTITY_PLURAL}}Module/backend/system-inputs/{{PASCAL_CASE_ENTITY_PLURAL}}.ts';
+    './rootDir/dist/backend/system-inputs/{{PASCAL_CASE_ENTITY_PLURAL}}.ts';
 
   constructor(
     private readonly entity,

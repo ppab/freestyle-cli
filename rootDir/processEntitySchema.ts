@@ -11,9 +11,9 @@ import { FrontEndComponentsResolver } from './TemplateLogicClasses/frontEnd-Comp
 import { DtoResolver } from './TemplateLogicClasses/dto-resolver';
 import { FrontEndEntityComponentResolver } from './TemplateLogicClasses/frontEnd-entity-component-resolver';
 import { ItemColDefResolver } from './TemplateLogicClasses/item-col-def-resolver';
-import It = jest.It;
 import { FrontEndEntitySliceResolver } from './TemplateLogicClasses/frontEnd-entity-slice-resolver';
 import { BackendSystemInputResolver } from './TemplateLogicClasses/backend-system-input-resolver';
+import { BackendSystemInputListResolver } from './TemplateLogicClasses/backend-system-input-list-resolver';
 
 type ArgsSchema = {
   name: string;
@@ -118,9 +118,7 @@ async function processArgs(
   return processedArgs;
 }
 
-async function processEntitySchema(path: string) {
-  const module = await loadModule(path);
-  const schema = module.default;
+async function processEntitySchema(schema) {
   const args = schema.arguments;
   const enums = schema.enums;
   const frontEndRoutes = schema.frontEnd.routes;
@@ -164,7 +162,9 @@ async function processEntitySchema(path: string) {
   backendSystemInputResolver.finalizeCtx();
   backendSystemInputResolver.createFile();
 
-  EnumResolver.createMultiple(enums, schema.entity, schema.entityPlural);
+  if (enums.length > 0) {
+    EnumResolver.createMultiple(enums, schema.entity, schema.entityPlural);
+  }
 
   FrontEndIndexResolver.create(schema.entity, schema.entityPlural);
   FrontEndRoutesResolver.create(
@@ -196,9 +196,29 @@ async function processEntitySchema(path: string) {
   itemColDefResolver.createFile();
 }
 
-function main(entitySchema) {
-  processEntitySchema(entitySchema);
+async function processEntities(path) {
+  const module = await loadModule(path);
+  const entities = module.entities;
+  const entitiesArr = [];
+
+  if (entities.length > 0) {
+    const backendSystemInputListResolver = new BackendSystemInputListResolver();
+    for (const entity of entities) {
+      console.log('processing entity->>', entity['entity']);
+      backendSystemInputListResolver.addImport(
+        entity['entity'],
+        entity['entityPlural'],
+      );
+      processEntitySchema(entity);
+    }
+    backendSystemInputListResolver.finalizeCtx();
+    backendSystemInputListResolver.createFile();
+  }
 }
 
-const entitySchema = './rootDir/entities/emails/email.entity-schema.ts';
+function main(path) {
+  processEntities(path);
+}
+
+const entitySchema = './rootDir/entities/entities.ts';
 main(entitySchema);
