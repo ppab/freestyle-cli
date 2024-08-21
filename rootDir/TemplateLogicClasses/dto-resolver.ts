@@ -2,8 +2,9 @@ import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.c
 import { TextFormatGenerator } from '../../src/lib/text-format-generator';
 import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { DTO_Config_Interface } from '../../src/types/global';
+import { ResolverBaseClass } from './resolver-base-class';
 
-export class DtoResolver {
+export class DtoResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
   import { {{DTO_DECORATORS_IMPORT}} } from 'class-validator';
   
@@ -14,30 +15,17 @@ export class DtoResolver {
   }
     `;
 
-  ctx: { [key: string]: string } | {} = {};
-
   otherImports = [];
   classTransformerImports: ClassTransformers[] = [];
   decoratorsSet = new Set<DtoDecoratorType>();
   items: DTO_Config_Interface[] = [];
 
-  constructor(
-    private readonly entity,
-    private readonly entityPlural,
-    private readonly contentDestinationPaths: string[],
-  ) {
-    this.entity = entity;
-    this.entityPlural = entityPlural;
-  }
-
   addToItems(value: DTO_Config_Interface) {
     this.items.push(value);
   }
 
-  processItems() {
-    this.addDecoratorsToSet();
-    this.resolveDecorators();
-    this.finalizeCtx();
+  processArgument(args) {
+    this.addToItems(args.dto.create);
   }
 
   addDecoratorsToSet() {
@@ -103,12 +91,6 @@ export class DtoResolver {
     this.addToCtx('DTO_FIELDS_CONTENT', fieldsContent.join('\n\n'));
   }
 
-  addEntityFormatsToCtx() {
-    console.log('addEntityToScema', arguments);
-    const obj = createEntityTextFormatsCtx(this.entity, this.entityPlural);
-    this.ctx = { ...this.ctx, ...obj };
-  }
-
   resolveClassTransformerImports(
     classTransformerImports: ClassTransformers[],
     otherImports: string[],
@@ -136,25 +118,14 @@ export class DtoResolver {
 
     this.addToCtx('DTO_OTHER_IMPORTS_JOIN', otherImportsJoin);
 
-    const entityFormats = createEntityTextFormatsCtx(
-      this.entity,
-      this.entityPlural,
+    this.addToCtx(
+      'DTO_CLASS_NAME',
+      `${this.entityTextFormats.PASCAL_CASE_ENTITY}Dto`,
     );
-    this.addToCtx('DTO_CLASS_NAME', `${entityFormats.PASCAL_CASE_ENTITY}Dto`);
   }
 
   addToCtx(key, value) {
     this.ctx[key] = value;
-  }
-
-  createFile(path) {
-    createFileWithCtxContent({
-      contentDestination: {
-        path,
-      },
-      contentSource: this.contentDestinationTemplateString,
-      ctx: this.ctx,
-    });
   }
 
   execute() {
@@ -162,12 +133,11 @@ export class DtoResolver {
     this.addDecoratorsToSet();
     this.resolveDecorators();
     this.finalizeCtx();
-  }
-
-  createMultiple() {
-    this.contentDestinationPaths.forEach((path) => this.createFile(path));
+    this.schema.dto.forEach((dtoConfig) => {
+      dtoConfig.paths.forEach((path) => {
+        this.setContentDestinationPath(path);
+        this.createFile();
+      });
+    });
   }
 }
-
-///clase processEntity
-// createEntityTextFormatsCtx

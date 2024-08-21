@@ -1,6 +1,9 @@
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { StringWithEntityCtxResolver } from './string-with-entity-ctx-resolver';
+import { EntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
+import { EntitySchema, ResolverBaseClass } from './resolver-base-class';
 
+//TODO: extend class from ResolverBaseClass
 export class GenericEntityListAndImportsTemplateResolver {
   /**
    * TODO:Add the functionality to be able to read the content from:
@@ -13,26 +16,44 @@ export class GenericEntityListAndImportsTemplateResolver {
   protected readonly contentDestinationPath: string;
   protected readonly importStrTemplate: string;
   protected readonly listStrTemplate: string;
+  protected schema: EntitySchema;
+  protected entityTextFormats: EntityTextFormatsCtx;
 
   private ctx: { [key: string]: string } | {} = {};
   private importsArr = [];
   private listItems = [];
+  protected entityName: { singular: string; plural: string };
 
-  public processEntity(entityName: { singular: string; plural: string }) {
-    this.importsArr.push(this.resolveImportStr(entityName));
-    this.listItems.push(this.resolveListStr(entityName));
+  public setSchema(schema: EntitySchema) {
+    this.schema = schema;
+    this.setEntity(this.entityNameFactory(schema.entity, schema.entityPlural));
+    this.processEntity();
   }
 
-  protected resolveImportStr(entityName: { singular: string; plural: string }) {
+  protected setEntity(entityName: { singular: string; plural: string }) {
+    this.entityName = entityName;
+  }
+
+  private entityNameFactory = (singular: string, plural: string) => ({
+    singular,
+    plural,
+  });
+
+  public processEntity() {
+    this.importsArr.push(this.resolveImportStr());
+    this.listItems.push(this.resolveListStr());
+  }
+
+  protected resolveImportStr() {
     return StringWithEntityCtxResolver.execute(
-      entityName,
+      this.entityName,
       this.importStrTemplate,
     );
   }
 
-  protected resolveListStr(entityName: { singular: string; plural: string }) {
+  protected resolveListStr() {
     return StringWithEntityCtxResolver.execute(
-      entityName,
+      this.entityName,
       this.listStrTemplate,
     );
   }

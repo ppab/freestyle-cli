@@ -11,11 +11,15 @@ export type EntitySchema = typeof genericSchema;
 export class ResolverBaseClass {
   protected schema: EntitySchema;
   protected entityName: { singular: string; plural: string };
-  protected ctx: { [key: string]: string };
+  protected ctx: { [key: string]: string } = {};
 
   protected contentDestinationPath: string;
   protected contentDestinationTemplateString: string;
   protected entityTextFormats: EntityTextFormatsCtx;
+
+  protected setContentDestinationPath(value: string) {
+    this.contentDestinationPath = value;
+  }
 
   public setSchema(schema: EntitySchema) {
     this.schema = schema;
@@ -48,6 +52,7 @@ export class ResolverBaseClass {
   }
 
   createFile() {
+    console.log('creatingFile-->>>');
     createFileWithCtxContent({
       contentDestination: {
         path: this.contentDestinationPath,
@@ -56,9 +61,7 @@ export class ResolverBaseClass {
       ctx: this.ctx,
     });
   }
-  protected finalizeCtx() {
-    this.addToCtx('TEST_CTX', 'VALUE'); //TODO: Remove this...
-  }
+  protected finalizeCtx(args?: any) {}
 
   addToCtx(key, value) {
     this.ctx[key] = value;
