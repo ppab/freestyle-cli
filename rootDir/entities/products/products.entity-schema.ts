@@ -1,21 +1,11 @@
 import { entityArguments } from './args';
-import { routesFactory } from '../../../src/factories/routes-builder.factory';
 
 export default {
-  entity: 'email',
-  entityPlural: 'emails',
+  entity: 'product',
+  entityPlural: 'products',
   arguments: entityArguments,
   rootDir: './rootDir/dist/',
-  enums: [
-    {
-      name: 'ProductCategory',
-      values: ['Primary', 'Secondary'],
-      paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-      ],
-    },
-  ],
+  enums: [],
   dto: [
     {
       name: 'create',
@@ -41,7 +31,7 @@ export default {
       },
     ],
     urlBuilder: {
-      relations: [],
+      relations: ['productCategory'],
     },
     routes: [],
     components: {
@@ -63,16 +53,6 @@ export default {
       },
       forms: {
         create: {
-          dto: {
-            name: 'CreateEmailDto',
-            path: './dto/create-email.dto',
-          },
-          enums: [
-            {
-              name: 'ProductCategory',
-              path: './enums/email-category.enum',
-            },
-          ],
           formElements: [],
         },
       },

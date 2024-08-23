@@ -95,6 +95,18 @@ type ComponentFormItem = {
   value?: string;
   label?: string;
   description?: string;
+  component?: string;
+  props?: {
+    statePath?: string;
+    filter?: {
+      key: string;
+      operator: string; //TODO:Add operator types
+      stateValuePath: string;
+    };
+    displayedValuePath?: string;
+    selectedValuePath?: string;
+    filterPath?: string;
+  };
 };
 
 type ComponentAgiGridFieldItemArgs = {
@@ -162,7 +174,7 @@ export const componentAgiGridItemFactory = ComponentAgiGridItemFactory.define(
 export function resolveType(value) {
   if (Array.isArray(value)) {
     // Type is an array and would be in the format ['type',{...args}]
-    // i.e ['enum',{name:'EmailCategory',path:'../enums/email-category.enum.ts'
+    // i.e ['enum',{name:'ProductCategory',path:'../enums/email-category.enum.ts'
     const [type, args] = value;
     return type;
   }

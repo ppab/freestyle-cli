@@ -30,6 +30,7 @@ export class EnumResolver extends ResolverBaseClass {
       this.schema.enums.forEach((enumConfig) => {
         enumConfig.paths.forEach((path) => {
           this.setContentDestinationPath(path);
+          this.addEntityFormatsToCtx();
           this.finalizeCtx({ name: enumConfig.name, value: enumConfig.values });
           this.createFile();
         });

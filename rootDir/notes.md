@@ -11,7 +11,7 @@ const obj = {
         },
         enums: [
             {
-                name: 'EmailCategory',
+                name: 'ProductCategory',
                 path: './enums/email-category.enum',
             }
         ],

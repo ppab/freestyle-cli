@@ -1,3 +1,4 @@
+import { ColumType } from 'typeor';
 export {};
 export type PathDefinitionType =
   | {
@@ -141,18 +142,56 @@ declare global {
 
   export type DtoDecorators = DtoDecoratorType[];
 
-  type TypeOrmDecoratorNames =
-    | 'Column'
-    | 'Entity'
-    | 'JoinColumn'
-    | 'ManyToOne'
-    | 'OneToMany';
+  ////TypeOrmDecoratorsArgs
+  type OneToManyDecoratorArgs = {
+    target: string;
+    path: string;
+    inverseSideFn: {
+      arg: string;
+      returnedValue: string;
+    };
+    options: {
+      cascade?: string;
+    };
+  };
+  type EnumDecoratorArgs = {
+    name: string;
+    path: string;
+  };
+
+  type TypeOrmDecoratorArgs =
+    | OneToManyDecoratorArgs
+    | EnumDecoratorArgs
+    | ColumnDecoratorArgs;
+
+  export type ColumnDecoratorArgs = {
+    nullable?: boolean;
+    type?: ColumnType;
+    enum?: EnumDecoratorArgs;
+  };
 
   type TypeOrmDecoratorWithArgs = [
     TypeOrmDecoratorNames,
-    { args: any; path?: string },
+    {
+      args: TypeOrmDecoratorArgs;
+      path?: string;
+    },
   ];
-  type TypeOrmDecoratorType = TypeOrmDecoratorNames | TypeOrmDecoratorWithArgs;
+  type TypeOrmDecoratorType =
+    | TypeOrmDecoratorNames
+    | TypeOrmDecoratorWithArgs
+    | ColumnDecoratorWithArgs;
+
+  export type TypeOrmKeysTypes =
+    | 'string'
+    | 'string[]'
+    | 'number'
+    | 'number[]'
+    | 'Record<string, any>'
+    | 'int'
+    | 'float'
+    | 'int64'
+    | 'long';
 
   export type TypeOrmDecorators = TypeOrmDecoratorType[];
 
@@ -178,9 +217,18 @@ export type DTO_Config_Interface = {
   type: string;
   decorators: DtoDecorators;
 };
+export type ColumnDecoratorWithArgs = ['Column', { args: ColumnDecoratorArgs }];
+export type EnumDecoratorWithArgs = ['Enum', { args: EnumDecoratorArgs }];
+export type TypeOrmDecoratorNames =
+  | 'Column'
+  | 'Entity'
+  | 'JoinColumn'
+  | 'ManyToOne'
+  | 'OneToMany';
+export type TypeOrmKeysEnumNameType = string;
 export type TypeOrmEntity_Config_Interface = {
   key: string;
-  type: string;
+  type: TypeOrmKeysTypes | TypeOrmKeysEnumNameType;
   isOptional?: boolean;
-  decorators: TypeOrmDecorators;
+  decorators: TypeOrmDecoratorType[];
 };

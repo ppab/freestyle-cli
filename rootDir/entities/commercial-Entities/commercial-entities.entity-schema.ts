@@ -1,18 +1,32 @@
 import { entityArguments } from './args';
-import { routesFactory } from '../../../src/factories/routes-builder.factory';
+import { typeormKeys } from './typeormKeys';
+
+export const commercialEntityArgumentsEnum = {
+  name: 'name',
+  displayName: 'displayName',
+  category: 'category',
+  taxId: 'taxId',
+  taxRegime: 'taxRegime',
+  contactId: 'contactId',
+  customFields: 'customFields',
+  contacts: 'contacts',
+  notes: 'notes',
+  invoices: 'invoices',
+};
 
 export default {
-  entity: 'email',
-  entityPlural: 'emails',
+  entity: 'commercial entity',
+  entityPlural: 'commercial entities',
   arguments: entityArguments,
   rootDir: './rootDir/dist/',
+  //TODO:
   enums: [
     {
-      name: 'ProductCategory',
-      values: ['Primary', 'Secondary'],
+      name: 'CommercialEntityCategory',
+      values: ['Supplier', 'Customer', 'Grower', 'Tenant'],
       paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
+        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/commercial-entities-category.enum.ts',
+        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/commercial-entities-category.enum.ts',
       ],
     },
   ],
@@ -41,7 +55,7 @@ export default {
       },
     ],
     urlBuilder: {
-      relations: [],
+      relations: ['contacts'],
     },
     routes: [],
     components: {
@@ -83,6 +97,7 @@ export default {
     typeOrm: {
       entityClassDecorator: 'Entity',
       sqlTable: '{{LOWERCASE_SNAKE_CASE_ENTITY_PLURAL}}',
+      properties: typeormKeys,
     },
   },
 };

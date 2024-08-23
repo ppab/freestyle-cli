@@ -1,4 +1,4 @@
-1. Create my own library that has CI/CD  that publishes to NPM
+# GOAL 1. Create my own library that has CI/CD  that publishes to NPM
 - It must have specs for all fns
 - As a habit, when you want to create new work you setup your TS environment
  and  do TDD and use the debugger also.
@@ -13,3 +13,13 @@
 
 !!!! Start creating new resources with  freestyle.
 
+
+# Factories:
+1. typeormKeysFactory
+ - review the configs in goldfieldGateway conf and create a factory for each configuration case
+
+2. classValidatorDtoFactory
+ - review the configs in goldfieldGateway conf and create a factory for each configuration case
+ 
+3. createFormFactory
+ - review the configs in templateReact conf and create a factory for each configuration case

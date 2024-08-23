@@ -5,7 +5,7 @@
 Definition:
 ```ts
 const formElement = {
-    type: ['enum', {name: 'EmailCategory', path: '../enums/email-category.enum.ts'}],
+    type: ['enum', {name: 'ProductCategory', path: '../enums/email-category.enum.ts'}],
     name: 'category',
     value: 'category',
     label: 'caegoria correo',
@@ -14,7 +14,7 @@ const formElement = {
 ```
 Resolves To
 ```ts
-import {EmailCategory} from '../enums/email-category.enum.ts'
+import {ProductCategory} from '../enums/email-category.enum.ts'
 
 const formElement = {
     type: 'enum',
@@ -24,7 +24,7 @@ const formElement = {
     description: "this is a description",
     component: 'select',
     props: {
-        options: EmailCategory
+        options: ProductCategory
     },
 }
 ```

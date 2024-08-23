@@ -10,7 +10,7 @@ const colDef = {
  Sí `editable: true` Resuelve Esto:
 
 ```ts
-import {EmailCategory} from '../enums/email-category.enum.ts'
+import {ProductCategory} from '../enums/email-category.enum.ts'
 
 const colDef = {
     field: 'displayName',
@@ -28,7 +28,7 @@ const colDef = {
 Sí `editable: false` Resuelve Esto:
 
 ```ts
-import {EmailCategory} from '../enums/email-category.enum.ts'
+import {ProductCategory} from '../enums/email-category.enum.ts'
 
 const colDef = {
     field: 'displayName',
@@ -41,13 +41,13 @@ SE DEFINE ASÍ
 ```js
 const colDef = {
     field: "category",
-    type: ['enum', {name: 'EmailCategory', path: '../enums/email-category.enum.ts'}]
+    type: ['enum', {name: 'ProductCategory', path: '../enums/email-category.enum.ts'}]
 }
 ```
 
 Resuelve Esto
 ```ts
-import {EmailCategory} from '../enums/email-category.enum.ts'
+import {ProductCategory} from '../enums/email-category.enum.ts'
 const colDef = {
     field: "category",
     valueSetter: ["reduxValueSetter2", {
@@ -57,7 +57,7 @@ const colDef = {
     }],
     cellEditor: 'agSelectCellEditor',
     cellEditorParams: {
-        values: Object.keys(EmailCategory),
+        values: Object.keys(ProductCategory),
     },
 
 }

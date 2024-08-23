@@ -1,18 +1,17 @@
 import { entityArguments } from './args';
-import { routesFactory } from '../../../src/factories/routes-builder.factory';
 
 export default {
-  entity: 'email',
-  entityPlural: 'emails',
+  entity: 'phone',
+  entityPlural: 'phones',
   arguments: entityArguments,
   rootDir: './rootDir/dist/',
   enums: [
     {
-      name: 'ProductCategory',
-      values: ['Primary', 'Secondary'],
+      name: 'PhoneCategory',
+      values: ['Mobile', 'Office'],
       paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
+        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/phone-category.enum.ts',
+        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/phone-category.enum.ts',
       ],
     },
   ],
