@@ -143,15 +143,16 @@ declare global {
   export type DtoDecorators = DtoDecoratorType[];
 
   ////TypeOrmDecoratorsArgs
-  type OneToManyDecoratorArgs = {
+
+  export type OneToManyDecoratorArgs = {
     target: string;
     path: string;
     inverseSideFn: {
       arg: string;
       returnedValue: string;
     };
-    options: {
-      cascade?: string;
+    options?: {
+      cascade?: TypeOrmRelationsCascade;
     };
   };
   type EnumDecoratorArgs = {
@@ -177,10 +178,6 @@ declare global {
       path?: string;
     },
   ];
-  type TypeOrmDecoratorType =
-    | TypeOrmDecoratorNames
-    | TypeOrmDecoratorWithArgs
-    | ColumnDecoratorWithArgs;
 
   export type TypeOrmKeysTypes =
     | 'string'
@@ -217,8 +214,20 @@ export type DTO_Config_Interface = {
   type: string;
   decorators: DtoDecorators;
 };
+export type TypeOrmRelationsCascade =
+  | boolean
+  | ('insert' | 'update' | 'remove' | 'soft-remove' | 'recover')[];
+export type TypeOrmDecoratorType =
+  | TypeOrmDecoratorNames
+  | TypeOrmDecoratorWithArgs
+  | ColumnDecoratorWithArgs
+  | OneToManyDecoratorWithArgs;
 export type ColumnDecoratorWithArgs = ['Column', { args: ColumnDecoratorArgs }];
-export type EnumDecoratorWithArgs = ['Enum', { args: EnumDecoratorArgs }];
+
+export type OneToManyDecoratorWithArgs = [
+  'OneToMany',
+  { args: OneToManyDecoratorArgs },
+];
 export type TypeOrmDecoratorNames =
   | 'Column'
   | 'Entity'
