@@ -3,12 +3,12 @@ import { commercialEntityArgumentsEnum } from './commercial-entities.entity-sche
 export const typeormKeys = [
   {
     decorators: ['Column'],
-    key: commercialEntityArgumentsEnum.name,
+    key: 'name',
     type: 'string',
   },
   {
     decorators: ['Column'],
-    key: commercialEntityArgumentsEnum.displayName,
+    key: 'displayName',
     type: 'string',
   },
   {
@@ -25,24 +25,24 @@ export const typeormKeys = [
         },
       ],
     ],
-    key: commercialEntityArgumentsEnum.category,
+    key: 'category',
     isOptional: false,
     type: 'CommercialEntityCategory',
   },
   {
-    key: commercialEntityArgumentsEnum.taxId,
+    key: 'taxId',
     decorators: ['Column'],
     type: 'string',
   },
   {
-    key: commercialEntityArgumentsEnum.taxRegime,
+    key: 'taxRegime',
     decorators: [['Column', { args: { nullable: true } }]],
     isOptional: true,
     type: 'string',
   },
   {
     decorators: [['Column', { args: { type: 'jsonb', nullable: true } }]],
-    key: commercialEntityArgumentsEnum.customFields,
+    key: 'customFields',
     isOptional: true,
     type: 'Record<string, any>',
   },
@@ -66,7 +66,7 @@ export const typeormKeys = [
       ],
       'JoinColumn',
     ],
-    key: commercialEntityArgumentsEnum.contacts,
+    key: 'contacts',
     type: 'ContactEntity[]',
   },
 
@@ -87,7 +87,7 @@ export const typeormKeys = [
         },
       ],
     ],
-    key: commercialEntityArgumentsEnum.notes,
+    key: 'notes',
     type: 'NoteEntity[]',
   },
   {
@@ -106,7 +106,7 @@ export const typeormKeys = [
         },
       ],
     ],
-    key: commercialEntityArgumentsEnum.invoices,
+    key: 'invoices',
     type: 'InvoiceNoteEntity[]',
   },
 ];

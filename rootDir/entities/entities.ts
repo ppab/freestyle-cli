@@ -1,4 +1,9 @@
 import currencyEntitySchema from './currencies/currency.entity-schema';
 import emailEntitySchema from './emails/email.entity-schema';
+import commercialEntitiesEntitySchema from './commercial-Entities/commercial-entities.entity-schema';
 
-export const entities = [emailEntitySchema, currencyEntitySchema];
+export const entities = [
+  emailEntitySchema,
+  currencyEntitySchema,
+  commercialEntitiesEntitySchema,
+];
