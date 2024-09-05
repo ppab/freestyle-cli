@@ -16,6 +16,7 @@ import { ItemColDefResolver } from './item-col-def-resolver';
 import { BackendSystemInputResolver } from './backend-system-input-resolver';
 import { DtoResolver } from './dto-resolver';
 import { EntitySchema } from './resolver-base-class';
+import { FrontEndAppNavigationResolver } from './frontEnd-app-navigation-resolver';
 
 export class TemplateResolvers {
   constructor(private readonly entitySchemaList: EntitySchema[]) {}
@@ -26,6 +27,7 @@ export class TemplateResolvers {
     new FrontendStoreListResolver(),
   ];
   entitySchemaResolvers = [
+    new FrontEndAppNavigationResolver(),
     new FrontEndIndexResolver(),
     new FrontEndPagesResolver(),
     new FrontEndComponentsResolver(),

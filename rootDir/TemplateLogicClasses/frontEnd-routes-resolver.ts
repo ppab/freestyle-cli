@@ -1,13 +1,12 @@
-import { routesGenericFactory } from '../../src/factories/routes-builder.factory';
+import { routesGenericFactory } from '../../src/factory/routes-builder.factory';
 import { ResolverBaseClass } from './resolver-base-class';
 
 export class FrontEndRoutesResolver extends ResolverBaseClass {
   resolvedRoutes: any = [];
 
   contentDestinationTemplateString: string = `
-    export const routes = [
-    {{FRONTEND_ROUTES}}
-    ];
+    export const routes = {{FRONTEND_ROUTES}};
+    
     `;
   contentDestinationPath: string =
     './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/routes.ts';

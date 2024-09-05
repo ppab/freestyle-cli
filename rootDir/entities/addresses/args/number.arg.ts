@@ -2,7 +2,7 @@ import { entityArgsFactory } from '../../../../src/factory/update.factory';
 
 export default entityArgsFactory
   .ensemble({
-    name: 'name',
+    name: 'number',
     type: 'string',
     frontEnd: {
       editable: true,
@@ -11,7 +11,7 @@ export default entityArgsFactory
         item: [
           [
             {
-              field: 'name',
+              field: 'number',
               type: 'string',
               editable: true,
             },
@@ -27,8 +27,8 @@ export default entityArgsFactory
     },
     backend: {
       typeOrm: {
-        decorators: [['Column', { args: { nullable: true } }]],
-        key: 'name',
+        decorators: ['Column'],
+        key: 'number',
         isOptional: false,
         type: 'string',
       },

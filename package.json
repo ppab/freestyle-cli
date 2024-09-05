@@ -19,6 +19,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "fishery": "^2.2.1"
+    "fishery": "^2.2.1",
+    "ppab-ts-lib": "file:../ts-lib"
   }
 }

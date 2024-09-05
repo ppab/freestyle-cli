@@ -1,6 +1,6 @@
-import { inputFieldComponentFactory } from './input-field-component.factory';
+import { selectFieldComponentFactory } from './select-field-component.factory';
 
-describe('inputFieldComponent', () => {
+describe('selectComponent', () => {
   describe('generic()', () => {
     it('should be able to recreate the base object', () => {
       const [base, factory] = [
@@ -9,15 +9,21 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name',
           label: 'name',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .generic({
             type: 'text',
             name: 'name',
             value: 'name',
             label: 'name',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];
@@ -31,13 +37,19 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name',
           label: 'name',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .generic({
             type: 'text',
             name: 'name',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];
@@ -53,12 +65,18 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name',
           label: 'name',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .number({
             name: 'name',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];
@@ -72,14 +90,20 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name2',
           label: 'name2',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .number({
             name: 'name',
             value: 'name2',
             label: 'name2',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];
@@ -95,12 +119,18 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name',
           label: 'name',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .string({
             name: 'name',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];
@@ -114,14 +144,20 @@ describe('inputFieldComponent', () => {
           name: 'name',
           value: 'name2',
           label: 'name2',
-          component: 'InputField',
+          component: 'select',
+          props: {
+            options: ['test'],
+          },
         },
 
-        inputFieldComponentFactory
+        selectFieldComponentFactory
           .string({
             name: 'name',
             value: 'name2',
             label: 'name2',
+            props: {
+              options: ['test'],
+            },
           })
           .build(),
       ];

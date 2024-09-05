@@ -5,11 +5,11 @@ import { ResolverBaseClass } from './resolver-base-class';
 export class FrontEndIndexResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
    import { listColDef } from './col-defs/{{KEBAB_CASE_ENTITY_PLURAL}}-list.col-def';
-   import  createForm  from './forms/create.forms';
+   import { {{KEBAB_CASE_ENTITY}}ItemColDef } from './col-defs/{{KEBAB_CASE_ENTITY}}-item.col-def'; 
+   import  createForm  from './forms/create.form';
    import { routes } from './routes';
    import  urlBuilder  from './url-builder';
-   import { appNavigation } from './appNavigation';
-   import { itemColDef } from './item.col-def';
+   import { appNavigation } from './app-navigation';
    
    export default {
    name: '{{PASCAL_CASE_ENTITY_PLURAL}}',
@@ -19,7 +19,7 @@ export class FrontEndIndexResolver extends ResolverBaseClass {
    routes: routes,
    colDef: {
     list: listColDef,
-    item: itemColDef,
+    item: {{KEBAB_CASE_ENTITY}}ItemColDef,
    },
    form: {
     create: createForm,

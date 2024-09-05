@@ -1,9 +1,9 @@
 import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
 import { strReplaceRegexMatchFromContextRemoveString } from '../../src/lib/strReplaceRegexMatchFromContext';
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
-import { resolveType } from '../../src/factories/update.factory';
-import { colDefFieldFactory } from '../../src/factories/frontend/components/col-defs/colDefField.factory';
-import { colDefItemComponentsFactory } from '../../src/factories/frontend/components/col-defs/colDefItemComponents.factory';
+import { resolveType } from '../../src/factory/update.factory';
+import { colDefFieldFactory } from '../../src/factory/frontend/components/col-defs/colDefField.factory';
+import { colDefItemComponentsFactory } from '../../src/factory/frontend/components/col-defs/colDefItemComponents.factory';
 import { ResolverBaseClass } from './resolver-base-class';
 
 export class ListColDefResolver extends ResolverBaseClass {

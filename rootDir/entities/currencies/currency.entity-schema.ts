@@ -1,5 +1,5 @@
 import { entityArguments } from './args';
-import { routesFactory } from '../../../src/factories/routes-builder.factory';
+import { routesFactory } from '../../../src/factory/routes-builder.factory';
 
 export default {
   entity: 'currency',

@@ -1,4 +1,4 @@
-import { resolveType } from '../../src/factories/update.factory';
+import { resolveType } from '../../src/factory/update.factory';
 import { ResolverBaseClass } from './resolver-base-class';
 
 export class FormComponentResolver extends ResolverBaseClass {

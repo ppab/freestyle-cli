@@ -2,27 +2,18 @@ import { entityArguments } from './args';
 import { routesFactory } from '../../../src/factory/routes-builder.factory';
 
 export default {
-  entity: 'email',
-  entityPlural: 'emails',
+  entity: 'product',
+  entityPlural: 'product categories',
   arguments: entityArguments,
   rootDir: './rootDir/dist/',
-  enums: [
-    {
-      name: 'EmailCategory',
-      values: ['Primary', 'Secondary'],
-      paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/email-category.enum.ts',
-      ],
-    },
-  ],
+  enums: [],
   dto: [
     {
       name: 'create',
       values: [],
       paths: [
         './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-dto.ts',
-        './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
+        // './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
       ],
     },
   ],
@@ -31,7 +22,7 @@ export default {
     appNavigation: [
       {
         role: 'fullRole',
-        parent: 'Catalog', //TODO: this is a dependency
+        parent: 'AppNavigation', //TODO: this is a dependency
         children: {
           icon: 'CogIcon',
           name: '{{PASCAL_CASE_ENTITY_PLURAL}}',
@@ -64,15 +55,10 @@ export default {
       forms: {
         create: {
           dto: {
-            name: 'CreateEmailDto',
-            path: './dto/create-email.dto',
+            name: 'CreateproductDto',
+            path: './dto/create-product.dto',
           },
-          enums: [
-            {
-              name: 'ProductCategory',
-              path: './enums/email-category.enum',
-            },
-          ],
+          enums: [],
           formElements: [],
         },
       },

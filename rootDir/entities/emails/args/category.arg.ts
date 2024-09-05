@@ -1,4 +1,4 @@
-import { entityArgsFactory } from '../../../../src/factories/update.factory';
+import { entityArgsFactory } from '../../../../src/factory/update.factory';
 
 export default entityArgsFactory
   .ensemble({
@@ -11,7 +11,7 @@ export default entityArgsFactory
           [
             'IsEnum',
             {
-              args: 'ProductCategory',
+              args: 'EmailCategory',
               path: '../enums/email-category.enum',
             },
           ],
@@ -25,7 +25,7 @@ export default entityArgsFactory
           editable: true,
           type: [
             'enum',
-            { name: 'ProductCategory', path: '../enums/email-category.enum' },
+            { name: 'EmailCategory', path: '../enums/email-category.enum' },
           ],
         },
         item: [
@@ -36,7 +36,7 @@ export default entityArgsFactory
               type: [
                 'enum',
                 {
-                  name: 'ProductCategory',
+                  name: 'EmailCategory',
                   path: '../enums/email-category.enum',
                 },
               ],
@@ -46,7 +46,7 @@ export default entityArgsFactory
         form: {
           type: [
             'enum',
-            { name: 'ProductCategory', path: '../enums/email-category.enum' },
+            { name: 'EmailCategory', path: '../enums/email-category.enum' },
           ],
           name: 'category',
           value: 'category',
@@ -62,7 +62,7 @@ export default entityArgsFactory
     //         item: {},
     //         forms: {
     //             imports:{
-    //                 args: 'ProductCategory',
+    //                 args: 'EmailCategory',
     //                 path: '../enums/address-category.enums',
     //             },
     //             item:{
@@ -71,7 +71,7 @@ export default entityArgsFactory
     //                 label: 'categoria',
     //                 component: 'select',
     //                 // props: {
-    //                 //     options: ProductCategory
+    //                 //     options: EmailCategory
     //                 // }
     //                 // description: "this is a description"
     //             }

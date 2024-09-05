@@ -1,5 +1,5 @@
 import { createEntityTextFormatsCtx } from '../../src/lib/createEntityTextFormatsCtx';
-import { urlBuilderFactory } from '../../src/factories/url-builder.factory';
+import { urlBuilderFactory } from '../../src/factory/url-builder.factory';
 import { ResolverBaseClass, EntitySchema } from './resolver-base-class';
 
 export class FrontEndUrlBuilderResolver extends ResolverBaseClass {
