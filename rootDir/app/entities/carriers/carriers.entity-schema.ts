@@ -12,6 +12,8 @@ export const commercialEntityArgumentsEnum = {
   contacts: 'contacts',
   notes: 'notes',
   invoices: 'invoices',
+  scac: 'scac',
+  caat: 'caat',
 };
 
 export default {
@@ -23,7 +25,7 @@ export default {
   enums: [
     {
       name: 'CommercialEntityCategory',
-      values: ['Supplier', 'Customer', 'Grower', 'Tenant'],
+      values: ['Supplier', 'ICustomer', 'Grower', 'Tenant'],
       paths: [
         './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/commercial-entities-category.enum.ts',
         './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/enums/commercial-entities-category.enum.ts',

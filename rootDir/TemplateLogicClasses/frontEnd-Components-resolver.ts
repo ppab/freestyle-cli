@@ -1,4 +1,5 @@
 import { ResolverBaseClass } from './resolver-base-class';
+
 export class FrontEndComponentsResolver extends ResolverBaseClass {
   contentDestinationTemplateString: string = `
 import Slice from "../../store/{{KEBAB_CASE_ENTITY_PLURAL}}-slice"
@@ -16,6 +17,11 @@ export const {{PASCAL_CASE_ENTITY_PLURAL}}Components = BuildComponents({
     urlBuilder: Schema.urlBuilder,
     stateKey: Schema.stateKey,
     Slice,
+    components: {
+      list: {
+        name: Schema.name,
+      },
+  },
 })
 
     `;

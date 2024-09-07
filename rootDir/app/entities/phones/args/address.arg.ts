@@ -1,4 +1,4 @@
-import { entityArgsFactory } from '../../../../src/factory/update.factory';
+import { entityArgsFactory } from '../../../../../src/factory/update.factory';
 
 export default entityArgsFactory
   .ensemble({
