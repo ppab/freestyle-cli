@@ -54,7 +54,7 @@ export class DtoResolver extends ResolverBaseClass {
   }
 
   resolveDecorators() {
-    const fieldsContent = this.items.map((field) => {
+    const fieldsContent = this.items.map((field: DTO_Config_Interface) => {
       const decorators = field.decorators
         .map((decorator: DtoDecoratorType) => {
           if (typeof decorator === 'string') return `@${decorator}()`;

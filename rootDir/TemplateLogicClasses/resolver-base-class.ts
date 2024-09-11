@@ -1,4 +1,4 @@
-import genericSchema from '../entities/emails/email.entity-schema';
+import genericSchema from '../app/entities/emails/email.entity-schema';
 import {
   createEntityTextFormatsCtx,
   EntityTextFormatsCtx,
@@ -6,6 +6,7 @@ import {
 import { createFileWithCtxContent } from '../../src/commands/createFileWithCtx.command';
 import { StringWithEntityCtxResolver } from './string-with-entity-ctx-resolver';
 import { strReplaceRegexMatchFromContextRemoveString } from '../../src/lib/strReplaceRegexMatchFromContext';
+
 export type EntitySchema = typeof genericSchema;
 
 export class ResolverBaseClass {
@@ -61,6 +62,7 @@ export class ResolverBaseClass {
       ctx: this.ctx,
     });
   }
+
   protected finalizeCtx(args?: any) {}
 
   addToCtx(key, value) {

@@ -1,4 +1,5 @@
 import { entityArguments } from './args';
+import { IAddress } from '../../types/interfaces/catalog/addresses.interface';
 
 export default {
   entity: 'address',
@@ -11,7 +12,7 @@ export default {
       name: 'create',
       values: [],
       paths: [
-        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-dto.ts',
+        './rootDir/dist/frontend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create.dto.config.md',
         // './rootDir/dist/backend/modules/{{KEBAB_CASE_ENTITY_PLURAL}}/dto/create-{{KEBAB_CASE_ENTITY_PLURAL}}.dto.ts',
       ],
     },

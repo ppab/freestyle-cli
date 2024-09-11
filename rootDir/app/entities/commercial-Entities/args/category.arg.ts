@@ -1,4 +1,4 @@
-import { entityArgsFactory } from '../../../../src/factory/update.factory';
+import { entityArgsFactory } from '../../../../../src/factory/update.factory';
 
 export default entityArgsFactory
   .ensemble({
@@ -64,8 +64,8 @@ export default entityArgsFactory
     backend: {
       typeOrm: {
         //TODO: verify that we can create Enums
-        // @Column({ enum: AddressCategory })
-        // category: AddressCategory;
+        // @Column({ enum: AddressCategoryEnum })
+        // category: AddressCategoryEnum;
 
         key: 'category',
         isOptional: false,

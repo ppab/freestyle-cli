@@ -36,7 +36,7 @@ export const reactFrontendSchema: FrontEndSchema = {
     {
       name: 'react-module/dto-create',
       dir: ['src', 'modules', '{{PASCAL_CASE_ENTITY_PLURAL}}', 'dto'],
-      fileName: ['create-dto.ts'],
+      fileName: ['create.dto.config.md'],
       templateFileName: 'generic-dto-create.txt',
     },
 

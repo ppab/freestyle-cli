@@ -1,8 +1,8 @@
-import { entityArgsFactory } from '../../../../src/factory/update.factory';
+import { entityArgsFactory } from '../../../../../src/factory/update.factory';
 
 export default entityArgsFactory
   .ensemble({
-    name: 'number',
+    name: 'numbers',
     type: 'string',
     frontEnd: {
       editable: true,

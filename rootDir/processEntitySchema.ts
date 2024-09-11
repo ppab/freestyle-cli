@@ -26,5 +26,5 @@ function main(path) {
   resolveSchemas(path);
 }
 
-const entitySchema = './rootDir/entities/entities.ts';
+const entitySchema = './rootDir/app/entities/entities.ts';
 main(entitySchema);

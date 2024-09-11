@@ -28,7 +28,7 @@ const schema = {
   backend: {
     enums: [
       {
-        name: 'AddressCategory',
+        name: 'AddressCategoryEnum',
         values: ['Primary', 'Secondary'],
       },
     ],

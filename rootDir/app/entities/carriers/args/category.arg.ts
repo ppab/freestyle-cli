@@ -1,88 +1,66 @@
-import { entityArgsFactory } from '../../../../src/factory/update.factory';
+import { entityArgsFactory } from '../../../../../src/factory/update.factory';
+import { ICarrier } from '../../../types/interfaces/commercial-entity/carrier/carrier.interface';
 
 export default entityArgsFactory
-  .ensemble({
+  .ensemble<ICarrier>({
     name: 'category',
     type: 'string',
-    dto: {
-      create: {
-        decorators: [
-          'IsString',
-          [
-            'IsEnum',
-            {
-              args: 'CommercialEntityCategory',
-              path: '../enums/email-category.enum',
-            },
-          ],
-        ],
-      },
-    },
     frontEnd: {
+      editable: true,
       component: {
-        list: {
-          field: 'category',
-          editable: true,
-          type: [
-            'enum',
-            {
-              name: 'CommercialEntityCategory',
-              path: '../enums/commercial-entity.enum',
-            },
-          ],
-        },
+        list: {},
         item: [
           [
             {
-              field: 'category',
-              editable: true,
-              type: [
-                'enum',
-                {
-                  name: 'CommercialEntityCategory',
-                  path: '../enums/commercial-entity.enum',
-                },
-              ],
+              field: 'contactI2',
+              type: 'string',
+              editable: false,
             },
           ],
         ],
         form: {
-          type: [
-            'enum',
+          name: 'contactId',
+          value: 'contactId',
+          label: 'contact',
+          component: 'ListFieldFromStatePath',
+          props: {
+            statePath: 'products.data',
+            filter: {
+              key: 'id',
+              operator: 'StringEquals',
+              stateValuePath: 'products.selected.id',
+            },
+            displayedValuePath: 'productCategory',
+            selectedValuePath: 'id',
+            filterPath: 'name',
+
+            // http://localhost:3002/contacts?filters=commercialEntityId:20927e1d-71fe-4245-bab3-555501d7ed22
+          },
+        },
+      },
+    },
+    dto: {
+      create: {
+        decorators: [
+          ['ValidateNested', { args: '{each:true}' }],
+          [
+            'Type',
             {
-              name: 'CommercialEntityCategory',
-              path: '../enums/commercial-entity.enum',
+              args: 'CreateContactDto',
+              path: '../../contacts/dto/create-contact.dto',
             },
           ],
-          name: 'category',
-          value: 'category',
-          label: 'categoria correo',
-          description: 'this is a description',
-        },
+        ],
+        key: 'contacts',
+        type: 'CreateContactDto',
       },
     },
     backend: {
       typeOrm: {
-        //TODO: verify that we can create Enums
-        // @Column({ enum: AddressCategory })
-        // category: AddressCategory;
-
-        key: 'category',
+        decorators: [['Column', { args: { nullable: true } }]],
+        key: 'contactId',
         isOptional: false,
-        type: 'CommercialEntityCategory',
-        decorators: [
-          [
-            'Column',
-            {
-              args: {
-                enum: {
-                  name: 'CommercialEntityCategory',
-                  path: '../../commercial-entities/enums/commercial-entity-category.enum',
-                },
-              },
-            },
-          ],
-        ],
+        type: 'string',
       },
     },
   })

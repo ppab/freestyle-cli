@@ -7,6 +7,7 @@ import { createEntityTextFormatsCtx } from '../lib/createEntityTextFormatsCtx';
 import { urlBuilderFactory } from './url-builder.factory';
 import { routesGenericFactory } from './routes-builder.factory';
 import { createFileSync } from '../commands/createFileSync.command';
+import { Argument } from '../../rootDir/app/types/lib/config-types';
 
 type EntityArgsDto = {
   create: DTO_Config_Interface;
@@ -263,8 +264,9 @@ export class EntityArgsItemFactory extends Factory<
     });
   }
 
-  ensemble(args: {
-    name: string;
+  ensemble<T = string>(args: {
+    // for the moment being if you don't provide T when using Argument, it defaults to any. TODO: remove default
+    name: Argument<T>;
     type: string;
     dto?: {
       create: CreatePropertyOptional<DTO_Config_Interface, 'key' | 'type'>;
